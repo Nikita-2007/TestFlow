@@ -7,21 +7,35 @@ import (
 )
 
 func index(w http.ResponseWriter, r *http.Request) {
-	page := "<h1>Главная</h1><div><a href='/home'>Домой</a></div>"
-	fmt.Fprint(w, page)
-}
-
-func home(w http.ResponseWriter, r *http.Request) {
-	page := "<p><b>Сервер работает</b></p><p><a href='/'>На главную</a></p><a href='/about'>О проекте</a>"
-	fmt.Fprint(w, page)
+	data := -6
+	page, err := template.ParseFiles(
+		"view/index.html",
+		"view/inc/header.html",
+		"view/inc/menu.html",
+		"view/inc/footer.html",
+	)
+	if err != nil {
+		fmt.Fprint(w, err.Error())
+	}
+	page.ExecuteTemplate(w, "content", data)
 }
 
 func about(w http.ResponseWriter, r *http.Request) {
-	page, _ := template.ParseFiles("view/about.html")
-	page.Execute(w, page)
+	data := 16
+	page, err := template.ParseFiles(
+		"view/about.html",
+		"view/inc/header.html",
+		"view/inc/menu.html",
+		"view/inc/footer.html",
+	)
+	if err != nil {
+		fmt.Fprint(w, err.Error())
+	}
+	page.ExecuteTemplate(w, "content", data)
 }
 
 func contact(w http.ResponseWriter, r *http.Request) {
+	data := 7
 	page, err := template.ParseFiles(
 		"view/contact.html",
 		"view/inc/header.html",
@@ -31,7 +45,7 @@ func contact(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Fprint(w, err.Error())
 	}
-	page.ExecuteTemplate(w, "content", nil)
+	page.ExecuteTemplate(w, "content", data)
 }
 
 func Control() {
@@ -42,7 +56,6 @@ func Control() {
 
 	//Урлы страниц
 	http.HandleFunc("/", index)
-	http.HandleFunc("/home/", home)
 	http.HandleFunc("/about/", about)
 	http.HandleFunc("/contact/", contact)
 
