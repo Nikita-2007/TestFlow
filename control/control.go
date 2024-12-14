@@ -21,12 +21,30 @@ func about(w http.ResponseWriter, r *http.Request) {
 	page.Execute(w, page)
 }
 
+func contact(w http.ResponseWriter, r *http.Request) {
+	page, err := template.ParseFiles(
+		"view/contact.html",
+		"view/inc/header.html",
+		"view/inc/menu.html",
+		"view/inc/footer.html",
+	)
+	if err != nil {
+		fmt.Fprint(w, err.Error())
+	}
+	page.ExecuteTemplate(w, "content", nil)
+}
+
 func Control() {
 	fmt.Println("Запуск сервера")
+
+	//Статические файлы
+	http.Handle("/view/", http.StripPrefix("/view/", http.FileServer(http.Dir("./view/"))))
+
 	//Урлы страниц
 	http.HandleFunc("/", index)
 	http.HandleFunc("/home/", home)
 	http.HandleFunc("/about/", about)
+	http.HandleFunc("/contact/", contact)
 
 	//Слушатель порта
 	http.ListenAndServe("localhost:8888", nil)
