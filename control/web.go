@@ -9,7 +9,7 @@ import (
 )
 
 func index(w http.ResponseWriter, r *http.Request) {
-	data := model.User{"Bob", 9, []string{"98", "93", "77", "82", "83"}}
+	data := model.AllUser()
 	page, err := template.ParseFiles(
 		"view/index.html",
 		"view/inc/header.html",

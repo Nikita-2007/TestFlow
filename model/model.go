@@ -3,27 +3,39 @@ package model
 import (
 	"database/sql"
 	"fmt"
+
+	_ "github.com/mattn/go-sqlite3"
 )
 
-type User struct {
+type user struct {
+	Id   int
 	Name string
 	Age  uint16
-	Arr  []string
 }
 
-func (u *User) getUserName() string {
-	return fmt.Sprintf(u.Name)
-}
-
-func GetUser() []User {
+func AllUser() []user {
 	path := "./model/data/db.sqlite"
 	db, err := sql.Open("sqlite3", path)
 	if err != nil {
-		fmt.Println(err)
+		panic(err)
 	}
-	data := db.QueryRow(`
-		SELECT * FROM 'User'
-	`)
-	fmt.Println(data)
+	defer db.Close()
+	rows, err := db.Query("SELECT * from User")
+	if err != nil {
+		panic(err)
+	}
+	defer rows.Close()
+	data := []user{}
+
+	for rows.Next() {
+		u := user{}
+		err := rows.Scan(&u.Id, &u.Name, &u.Age)
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
+		data = append(data, u)
+	}
+
 	return data
 }
