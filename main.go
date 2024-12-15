@@ -5,5 +5,6 @@ import (
 )
 
 func main() {
-	control.Control()
+	control.Tg()
+	control.Web()
 }

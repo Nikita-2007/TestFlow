@@ -1,19 +1,15 @@
 package control
 
 import (
+	"TestFlow/model"
 	"fmt"
 	"html/template"
 	"net/http"
+	"time"
 )
 
-type User struct {
-	Name string
-	Age  uint16
-	Arr  []string
-}
-
 func index(w http.ResponseWriter, r *http.Request) {
-	data := User{"Bob", 9, []string{"98", "93", "77", "82", "83"}}
+	data := model.User{"Bob", 9, []string{"98", "93", "77", "82", "83"}}
 	page, err := template.ParseFiles(
 		"view/index.html",
 		"view/inc/header.html",
@@ -54,8 +50,10 @@ func contact(w http.ResponseWriter, r *http.Request) {
 	page.ExecuteTemplate(w, "content", data)
 }
 
-func Control() {
-	fmt.Println("Запуск сервера")
+func Web() {
+	t := time.Now()
+	fmt.Printf(t.Format("2006.01.02") + " " + t.Format("15:04:05") + " " + "Web-сервер успешно запущен")
+	fmt.Println()
 
 	//Статические файлы
 	http.Handle("/view/", http.StripPrefix("/view/", http.FileServer(http.Dir("./view/"))))
