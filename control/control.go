@@ -6,8 +6,14 @@ import (
 	"net/http"
 )
 
+type User struct {
+	Name string
+	Age  uint16
+	Arr  []string
+}
+
 func index(w http.ResponseWriter, r *http.Request) {
-	data := -6
+	data := User{"Bob", 9, []string{"98", "93", "77", "82", "83"}}
 	page, err := template.ParseFiles(
 		"view/index.html",
 		"view/inc/header.html",
