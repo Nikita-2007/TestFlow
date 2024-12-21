@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
-	"net/url"
 	"strconv"
 	"strings"
 	"time"
@@ -21,8 +20,36 @@ func Web(host, port string) {
 	http.HandleFunc("/about/", about)
 	http.HandleFunc("/contact/", contact)
 	http.HandleFunc("/create-user/", createUser)
-	http.HandleFunc("/user/{id}", getUser)
+	http.HandleFunc("/user/{id}/", getUser)
+	/*
+		http.HandleFunc("/change-user/", changeUser)
 
+		http.HandleFunc("/courses/", courses)
+		http.HandleFunc("/create-course/", createCourse)
+		http.HandleFunc("/course/{id}/", course)
+		http.HandleFunc("/course/{id}/setting/", courseSetting)
+		http.HandleFunc("/course/{id}/tests/", courseTests)
+		http.HandleFunc("/course/{id}/users/", courseUsers)
+		http.HandleFunc("/course/{id}/add-user/", courseAddUser)
+		http.HandleFunc("/course/{id}/del-user/", courseDelUser)
+		http.HandleFunc("/course/{id}/delelte/", courseDelete)
+
+		http.HandleFunc("/create-test/", createTest)
+		http.HandleFunc("/test/{id}/", test)
+		http.HandleFunc("/test/{id}/setting/", test)
+		http.HandleFunc("/test/{id}/switch/", testSwitch)
+		http.HandleFunc("/test/{id}/delete/", testDelete)
+
+		http.HandleFunc("/test/{id}/users", testUsers)
+		http.HandleFunc("/test/{id}/user/{id}", testUser)
+
+		http.HandleFunc("/quests/", quests)
+		http.HandleFunc("/create-quest/", createQuest)
+		http.HandleFunc("/quest/{id}/", quest)
+		http.HandleFunc("/quest/{id}/setting/", questsSetting)
+		http.HandleFunc("/quest/{id}/delete/", questDelete)
+
+	*/
 	//Слушатель порта
 	http.ListenAndServe(host+":"+port, nil)
 }
@@ -85,11 +112,9 @@ func createUser(w http.ResponseWriter, r *http.Request) {
 }
 
 func getUser(w http.ResponseWriter, r *http.Request) {
-	u, _ := url.Parse(r.RequestURI)
-	path := u.Path
-	parts := strings.Split(path, "/")
-	key, _ := strconv.Atoi(parts[len(parts)-1])
-	data := model.GetUser(key)
+	arr := strings.Split(r.RequestURI, "/")
+	id, _ := strconv.Atoi(arr[len(arr)-1])
+	data := id
 	tmpl := tmplFiles("view/user.html")
 	tmpl.ExecuteTemplate(w, "content", data)
 }
