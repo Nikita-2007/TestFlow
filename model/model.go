@@ -20,7 +20,7 @@ func AllUser() []user {
 		panic(err)
 	}
 	defer db.Close()
-	rows, err := db.Query("SELECT * from User")
+	rows, err := db.Query("SELECT * FROM User")
 	if err != nil {
 		panic(err)
 	}
@@ -36,6 +36,5 @@ func AllUser() []user {
 		}
 		data = append(data, u)
 	}
-
 	return data
 }
