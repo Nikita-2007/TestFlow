@@ -3,6 +3,23 @@
 {{template "menu"}}
 <main>
     Контент index
+    <p>Цикл</p>
+    {{range .}}
+    <p>
+        {{.Name}} - {{.Age}} -
+        <a href="/user/{{.Id}}">Смотреть пользователя</a>
+        {{if lt .Age 18}}
+            меньше 18
+        {{else}}
+            больше 18
+        {{end}}
+    
+    {{else}}
+        список пуст
+    {{end}}
+    </p>
+    <br><br>
+    <p>Все содержимое:</p>
     {{.}}
 </main>
 {{template "footer"}}
