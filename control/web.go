@@ -8,55 +8,10 @@ import (
 	"time"
 )
 
-func index(w http.ResponseWriter, r *http.Request) {
-	data := model.AllUser()
-	page, err := template.ParseFiles(
-		"view/index.html",
-		"view/inc/header.html",
-		"view/inc/menu.html",
-		"view/inc/footer.html",
-	)
-	if err != nil {
-		fmt.Fprint(w, err.Error())
-	}
-	page.ExecuteTemplate(w, "content", data)
-}
-
-func about(w http.ResponseWriter, r *http.Request) {
-	data := 16
-	page, err := template.ParseFiles(
-		"view/about.html",
-		"view/inc/header.html",
-		"view/inc/menu.html",
-		"view/inc/footer.html",
-	)
-	if err != nil {
-		fmt.Fprint(w, err.Error())
-	}
-	page.ExecuteTemplate(w, "content", data)
-}
-
-func contact(w http.ResponseWriter, r *http.Request) {
-	data := 7
-	page, err := template.ParseFiles(
-		"view/contact.html",
-		"view/inc/header.html",
-		"view/inc/menu.html",
-		"view/inc/footer.html",
-	)
-	if err != nil {
-		fmt.Fprint(w, err.Error())
-	}
-	page.ExecuteTemplate(w, "content", data)
-}
-
-func Web() {
+// Контраллер Web
+func Web(host, port string) {
 	t := time.Now()
-	fmt.Printf(t.Format("2006.01.02") + " " + t.Format("15:04:05") + " " + "Web-сервер успешно запущен")
-	fmt.Println()
-
-	//Статические файлы
-	http.Handle("/view/", http.StripPrefix("/view/", http.FileServer(http.Dir("./view/"))))
+	fmt.Println(t.Format("2006.01.02") + " " + t.Format("15:04:05") + " " + "Web-сервер успешно запущен")
 
 	//Урлы страниц
 	http.HandleFunc("/", index)
@@ -64,5 +19,39 @@ func Web() {
 	http.HandleFunc("/contact/", contact)
 
 	//Слушатель порта
-	http.ListenAndServe("localhost:8888", nil)
+	http.ListenAndServe(host+":"+port, nil)
+}
+
+// Добавляем контент в список компонентов для генерации страниц (а если надо 2+ ?)
+func tmplFiles(content string) *template.Template {
+	tmpl, err := template.ParseFiles(
+		"view/inc/header.html",
+		"view/inc/menu.html",
+		"view/inc/footer.html",
+		content,
+	)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	return tmpl
+}
+
+//Функции страниц:
+
+func index(w http.ResponseWriter, r *http.Request) {
+	data := model.AllUser()
+	tmpl := tmplFiles("view/index.html")
+	tmpl.ExecuteTemplate(w, "content", data)
+}
+
+func about(w http.ResponseWriter, r *http.Request) {
+	data := 16
+	tmpl := tmplFiles("view/about.html")
+	tmpl.ExecuteTemplate(w, "content", data)
+}
+
+func contact(w http.ResponseWriter, r *http.Request) {
+	data := 7
+	tmpl := tmplFiles("view/contact.html")
+	tmpl.ExecuteTemplate(w, "content", data)
 }
