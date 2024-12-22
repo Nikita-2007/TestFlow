@@ -6,17 +6,16 @@ import (
 )
 
 var (
-	Dbms string // Тип СУБД
-	Path string // Путь к БД
+	Dbms string
+	Path string
 )
 
-// Создание БД(одноразово при запуске)
-func Init(dbms, path string) {
-	Dbms = dbms
-	Path = path
+func Init(DBMS, PATH string) {
+	Dbms = DBMS
+	Path = PATH
 
 	//Проверка на существование БД и ее создание при необходимости
-	createTable() //ДОДЕЛАТЬ
+	createTable() //ДОДЕЛАТЬ все таблицы с внутренними ключами
 }
 
 func createTable() {

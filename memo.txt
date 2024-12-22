@@ -79,7 +79,8 @@ db.Exec() - запись в БД, обновление и удаление
 result.LastInsertId() - возвращает id последнего добавления
 result.RowsAffected() - возвращает количество добавленных строк
 
-Все запросы GET, POST, OPTIONS, HEAD, PUT, PATCH, DELETE, TRACE, CONNECT
+//Проверка запроса
+r.Method == GET, POST, OPTIONS, HEAD, PUT, PATCH, DELETE, TRACE, CONNECT
 
 #############################################
 1. Устанавливаем Go (сейчас 1.23.4)
@@ -101,4 +102,4 @@ result.RowsAffected() - возвращает количество добавле
 9. От администратора, вводим команду: pacman -S mingw-w64-ucrt-x86_64-gcc
 10. Добавляем в Path: C:\Program Files\msys64\ucrt64\bin
 11. Проверяем в терминале: gcc --version
-12. Перезагрузить компьютер(обновить PATH)
+12. Ура! Заработало!

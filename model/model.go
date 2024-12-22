@@ -2,73 +2,101 @@ package model
 
 import (
 	"database/sql"
-	"fmt"
 
 	_ "github.com/mattn/go-sqlite3"
 )
 
-type user struct {
+// Подключение к БД
+func connect() *sql.DB {
+	db, err := sql.Open(Dbms, Path)
+	if err != nil {
+		panic(err)
+	}
+
+	return db
+}
+
+// Структура данных пользователей
+type User struct {
 	Id   int
 	Name string
-	Age  uint16
+	Age  int
 }
 
-func AddUser(name string, age int) {
-	db, err := sql.Open(Dbms, Path)
-	if err != nil {
-		panic(err)
-	}
-	defer db.Close()
-	data, err := db.Exec("INSERT INTO User (Name, Age) VALUES ($1, $2)", name, age)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Print(data.RowsAffected())
-	fmt.Println(data.LastInsertId())
+type Courses struct {
+	Id   int
+	Name string
+	// ...
 }
 
-func AllUser() []user {
-	path := "./model/data/db.sqlite"
-	db, err := sql.Open("sqlite3", path)
-	if err != nil {
-		panic(err)
+// Вывод всех пользователей
+func AllUser() *[]User {
+	db := connect()
+	query := "SELECT * FROM User"
+	data, _ := db.Query(query)
+	users := []User{}
+	for data.Next() {
+		user := User{}
+		data.Scan(&user.Id, &user.Name, &user.Age)
+		users = append(users, user)
 	}
-	defer db.Close()
-	rows, err := db.Query("SELECT * FROM User")
-	if err != nil {
-		panic(err)
-	}
-	defer rows.Close()
-	data := []user{}
+	db.Close()
 
-	for rows.Next() {
-		u := user{}
-		err := rows.Scan(&u.Id, &u.Name, &u.Age)
-		if err != nil {
-			fmt.Println(err)
-			continue
-		}
-		data = append(data, u)
-	}
-	return data
+	return &users
 }
 
-// Данные пользователя  ПЕРЕДОДЕЛАТЬ
-func GetUser(id int) *user {
-	db, err := sql.Open(Dbms, Path)
-	if err != nil {
-		panic(err)
-	}
-	defer db.Close()
-
+// Вывод данных пользователя
+func GetUser(id int) *User {
+	db := connect()
 	query := "SELECT * FROM User WHERE id = $1"
 	data := db.QueryRow(query, id)
-
-	user := user{}
-	err = data.Scan(&user.Id, &user.Name, &user.Age)
-	if err != nil {
-		panic(err)
-	}
+	user := User{}
+	data.Scan(&user.Id, &user.Name, &user.Age)
+	db.Close()
 
 	return &user
+}
+
+// Добавление пользователя
+func AddUser(name string, age int) {
+	db := connect()
+	query := "INSERT INTO User (Name, Age) VALUES ($1, $2)"
+	db.Exec(query, name, age)
+	db.Close()
+}
+
+// Обновление пользователя
+func UpdateUser(id int, name string, age int) {
+	db := connect()
+	query := "UPDATE User SET Name=?, Age=? WHERE id = ?"
+	db.Exec(query, name, age, id)
+	db.Close()
+}
+
+// Удаление пользователя
+func DeleteUser(id int) {
+	db := connect()
+	query := "DELETE FROM User WHERE id = $1"
+	db.Exec(query, id)
+	db.Close()
+}
+
+func AllCoursec() int {
+	return 1
+}
+
+func CreateCourse() int {
+	return 2
+}
+
+func GetCourse() int {
+	return 3
+}
+
+func UpdateCourse() int {
+	return 4
+}
+
+func DeleteCourse()  {
+
 }
