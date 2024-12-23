@@ -58,11 +58,13 @@ func GetUser(id int) *User {
 }
 
 // Добавление пользователя
-func AddUser(name string, age int) {
+func AddUser(name string, age int) int {
 	db := connect()
 	query := "INSERT INTO User (Name, Age) VALUES ($1, $2)"
-	db.Exec(query, name, age)
+	result, _ := db.Exec(query, name, age)
 	db.Close()
+	id, _ := result.LastInsertId()
+	return int(id)
 }
 
 // Обновление пользователя
@@ -97,6 +99,6 @@ func UpdateCourse() int {
 	return 4
 }
 
-func DeleteCourse()  {
+func DeleteCourse() {
 
 }

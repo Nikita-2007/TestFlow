@@ -28,7 +28,7 @@ func Web(host, port string) {
 	http.HandleFunc("/update-course/{id}", updateCourse)
 	http.HandleFunc("/delelte-course/{id}", deleteCourse)
 	/*
-		
+
 		http.HandleFunc("/course/{id}/tests/", courseTests)
 		http.HandleFunc("/course/{id}/users/", courseUsers)
 		http.HandleFunc("/course/{id}/add-user/", courseAddUser)
@@ -74,6 +74,20 @@ func tmplFiles(content string) *template.Template {
 	return tmpl
 }
 
+// Верификация
+func valid(name string, age int) bool {
+	vName := name != "" && len(name) < 128
+	vAge := age > 0 && age < 128
+	return vName && vAge
+}
+
+// Выборка id из урла
+func getId(url string) int {
+	arr := strings.Split(url, "/")
+	id, _ := strconv.Atoi(arr[len(arr)-1])
+	return id
+}
+
 // Функции страниц:
 
 func index(w http.ResponseWriter, r *http.Request) {
@@ -94,6 +108,7 @@ func contact(w http.ResponseWriter, r *http.Request) {
 	tmpl.ExecuteTemplate(w, "content", data)
 }
 
+// Создать пользователя
 func createUser(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "GET" {
 		// Выводим форму для заполнения
@@ -104,59 +119,49 @@ func createUser(w http.ResponseWriter, r *http.Request) {
 		// Принимаем форму с данными
 		name := r.FormValue("name")
 		age, err := strconv.Atoi(r.FormValue("age"))
-		//Верификация
-		if name == "" || len(name) > 127 {
-			fmt.Fprintf(w, "Имя указано не верно")
+		//Верификация и добавление данных в базу данных
+		if err == nil && valid(name, age) {
+			id := model.AddUser(name, age)
+			http.Redirect(w, r, "/get-user/"+strconv.Itoa(id), http.StatusSeeOther)
+		} else {
+			http.Redirect(w, r, "/", http.StatusSeeOther) //надо редирект на 404
 		}
-		if err != nil || age < 0 || age > 127 {
-			fmt.Fprintf(w, "Возраст указан не верно")
-		}
-		//Добавляем данные в базу данных
-		model.AddUser(name, age)
-		//Редирект после отправки формы
-		http.Redirect(w, r, "/", http.StatusSeeOther)
 	}
 }
 
+// Вывод пользователя
 func getUser(w http.ResponseWriter, r *http.Request) {
-	arr := strings.Split(r.RequestURI, "/")
-	id, _ := strconv.Atoi(arr[len(arr)-1])
+	id := getId(r.RequestURI)
 	data := model.GetUser(id)
 	tmpl := tmplFiles("view/get-user.html")
 	tmpl.ExecuteTemplate(w, "content", data)
 }
 
+// Редактировать пользователя
 func updateUser(w http.ResponseWriter, r *http.Request) {
+	id := getId(r.RequestURI)
 	if r.Method == "GET" {
 		// Выводим форму для заполнения
-		arr := strings.Split(r.RequestURI, "/")
-		id, _ := strconv.Atoi(arr[len(arr)-1])
 		data := model.GetUser(id)
 		tmpl := tmplFiles("view/update-user.html")
 		tmpl.ExecuteTemplate(w, "content", data)
 	} else if r.Method == "POST" {
 		// Принимаем форму с данными
-		arr := strings.Split(r.RequestURI, "/")
-		id, _ := strconv.Atoi(arr[len(arr)-1])
 		name := r.FormValue("name")
 		age, err := strconv.Atoi(r.FormValue("age"))
-		//Верификация
-		if name == "" || len(name) > 127 {
-			fmt.Fprintf(w, "Имя указано не верно")
+		//Верификация и добавление данных в базу данных
+		if err == nil && valid(name, age) {
+			model.UpdateUser(id, name, age)
+			http.Redirect(w, r, "/get-user/"+strconv.Itoa(id), http.StatusSeeOther)
+		} else {
+			http.Redirect(w, r, "/", http.StatusSeeOther) //надо редирект на 404
 		}
-		if err != nil || age < 0 || age > 127 {
-			fmt.Fprintf(w, "Возраст указан не верно")
-		}
-		//Добавляем данные в базу данных
-		model.UpdateUser(id, name, age)
-		//Редирект после отправки формы
-		http.Redirect(w, r, "/", http.StatusSeeOther)
 	}
 }
 
+// Удалить пользователя
 func deleteUser(w http.ResponseWriter, r *http.Request) {
-	arr := strings.Split(r.RequestURI, "/")
-	id, _ := strconv.Atoi(arr[len(arr)-1])
+	id := getId(r.RequestURI)
 	model.DeleteUser(id)
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
@@ -172,8 +177,6 @@ func createCourse(w http.ResponseWriter, r *http.Request) {
 	tmpl := tmplFiles("view/course/create-course.html")
 	tmpl.ExecuteTemplate(w, "content", data)
 }
-
-
 
 func getCourse(w http.ResponseWriter, r *http.Request) {
 	data := model.GetCourse()
