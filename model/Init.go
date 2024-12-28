@@ -30,17 +30,21 @@ func createTable() {
 	}
 	defer db.Close()
 
-	query := "CREATE TABLE IF NOT EXISTS User (Id INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Age INTEGER)"
+	query := `CREATE TABLE IF NOT EXISTS User (
+		Id INTEGER PRIMARY KEY AUTOINCREMENT,
+		Name TEXT,
+		Avatar TEXT,
+		Name TEXT,
+		Email TEXT,
+		DataBirth TEXT,
+		Course TEXT,
+		DataReg TEXT,
+		Status TEXT,
+		Rate INTEGER
+	)`
 	data, err := db.Exec(query)
 	if err != nil {
 		panic(err)
 	}
 	fmt.Println(data.RowsAffected()) //Сообщение о создании БД или что она уже есть
-}
-
-// Резервное копирование БД
-func backupDB() { // ДОДЕЛАТЬ КОПИРОВАНИЕ
-	//t := time.Now()
-	//file := "./model/backup/" + t.Format("2006-01-02") + "_" + t.Format("15-04-05") + ".db"
-	//println(file)
 }
