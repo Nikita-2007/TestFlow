@@ -34,7 +34,7 @@ func createTable() {
 		Id INTEGER PRIMARY KEY AUTOINCREMENT,
 		Name TEXT,
 		Avatar TEXT,
-		Name TEXT,
+		Password TEXT,
 		Email TEXT,
 		DataBirth TEXT,
 		Course TEXT,

@@ -16,14 +16,14 @@ func createUser(w http.ResponseWriter, r *http.Request) {
 	} else if r.Method == "POST" {
 		// Принимаем форму с данными
 		name := r.FormValue("name")
-		age, err := strconv.Atoi(r.FormValue("age"))
-		//Верификация и добавление данных в базу данных
-		if err == nil && valid(name, age) {
-			id := model.AddUser(name, age)
-			http.Redirect(w, r, "/get-user/"+strconv.Itoa(id), http.StatusSeeOther)
-		} else {
-			http.Redirect(w, r, "/", http.StatusSeeOther) //надо редирект на 404
+		if !valid(name) {
+			name = "Unknown"
 		}
+		password := r.FormValue("password")
+		email := r.FormValue("email")
+		dataBirth := r.FormValue("dataBirth")
+		id := model.AddUser(name, password, email, dataBirth)
+		http.Redirect(w, r, "/get-user/"+strconv.Itoa(id), http.StatusSeeOther)
 	}
 }
 
@@ -46,14 +46,14 @@ func updateUser(w http.ResponseWriter, r *http.Request) {
 	} else if r.Method == "POST" {
 		// Принимаем форму с данными
 		name := r.FormValue("name")
-		age, err := strconv.Atoi(r.FormValue("age"))
-		//Верификация и добавление данных в базу данных
-		if err == nil && valid(name, age) {
-			model.UpdateUser(id, name, age)
-			http.Redirect(w, r, "/get-user/"+strconv.Itoa(id), http.StatusSeeOther)
-		} else {
-			http.Redirect(w, r, "/", http.StatusSeeOther) //надо редирект на 404
+		if !valid(name) {
+			name = "Unknown"
 		}
+		password := r.FormValue("password")
+		email := r.FormValue("email")
+		dataBirth := r.FormValue("dataBirth")
+		model.UpdateUser(id, name, password, email, dataBirth)
+		http.Redirect(w, r, "/get-user/"+strconv.Itoa(id), http.StatusSeeOther)
 	}
 }
 

@@ -1,10 +1,13 @@
 package model
 
+import "time"
+
 // Структура данных пользователей
 type User struct {
 	Id           int
 	Avatar       string
 	Name         string
+	Password     string
 	Email        string
 	DataBirth    string
 	Course       string
@@ -23,7 +26,18 @@ func AllUser() *[]User {
 	users := []User{}
 	for data.Next() {
 		user := User{}
-		data.Scan(&user.Id, &user.Name, &user.DataReg)
+		data.Scan(
+			&user.Id,
+			&user.Name,
+			&user.Avatar,
+			&user.Password,
+			&user.Email,
+			&user.DataBirth,
+			&user.Course,
+			&user.DataReg,
+			&user.Status,
+			&user.Rate,
+		)
 		users = append(users, user)
 	}
 	db.Close()
@@ -39,8 +53,9 @@ func GetUser(id int) *User {
 	user := User{}
 	data.Scan(
 		&user.Id,
-		&user.Avatar,
 		&user.Name,
+		&user.Avatar,
+		&user.Password,
 		&user.Email,
 		&user.DataBirth,
 		&user.Course,
@@ -49,25 +64,26 @@ func GetUser(id int) *User {
 		&user.Rate,
 	)
 	db.Close()
-
 	return &user
 }
 
 // Добавление пользователя
-func AddUser(name string, age int) int {
+func AddUser(name string, password string, email string, dataBirth string) int {
 	db := connect()
-	query := "INSERT INTO User (Name, DataReg) VALUES ($1, $2)"
-	result, _ := db.Exec(query, name, age)
+	dataReg := time.Now().Format("2006-01-02")
+	avatar := "./view/img/avatar.png"
+	query := "INSERT INTO User (Avatar, Name, Password, Email, DataBirth, Course, DataReg, Status, Rate) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)"
+	result, _ := db.Exec(query, avatar, name, password, email, dataBirth, "отсутствует", dataReg, "active", 0)
 	db.Close()
 	id, _ := result.LastInsertId()
 	return int(id)
 }
 
 // Обновление пользователя
-func UpdateUser(id int, name string, age int) {
+func UpdateUser(id int, name string, password string, email string, dataBirth string) {
 	db := connect()
-	query := "UPDATE User SET Name=?, Age=? WHERE id = ?"
-	db.Exec(query, name, age, id)
+	query := "UPDATE User SET Name=?, Password=?, Email=?, DataBirth=? WHERE id = ?"
+	db.Exec(query, name, password, email, dataBirth, id)
 	db.Close()
 }
 

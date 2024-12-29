@@ -16,6 +16,8 @@ func Web(host, port string) {
 	http.HandleFunc("/", index)
 	http.HandleFunc("/about/", about)
 	http.HandleFunc("/author/", author)
+	http.HandleFunc("/admin/", admin)
+	http.HandleFunc("/demo-migration/", demo)
 
 	http.HandleFunc("/create-user/", createUser)
 	http.HandleFunc("/get-user/{id}", getUser)
@@ -74,10 +76,9 @@ func tmplFiles(content string) *template.Template {
 }
 
 // Верификация
-func valid(name string, age int) bool {
+func valid(name string) bool {
 	vName := name != "" && len(name) < 128
-	vAge := age > 0 && age < 128
-	return vName && vAge
+	return vName
 }
 
 // Выборка id из урла
@@ -105,4 +106,15 @@ func author(w http.ResponseWriter, r *http.Request) {
 	data := "Об авторе"
 	tmpl := tmplFiles("view/author.html")
 	tmpl.ExecuteTemplate(w, "content", data)
+}
+
+func admin(w http.ResponseWriter, r *http.Request) {
+	data := "Админ-панель"
+	tmpl := tmplFiles("view/admin.html")
+	tmpl.ExecuteTemplate(w, "content", data)
+}
+
+func demo(w http.ResponseWriter, r *http.Request) {
+	model.DemoUser()
+	http.Redirect(w, r, "/admin/", http.StatusSeeOther)
 }
