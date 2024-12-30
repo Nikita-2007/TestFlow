@@ -18,7 +18,8 @@ func createCourse(w http.ResponseWriter, r *http.Request) {
 }
 
 func getCourse(w http.ResponseWriter, r *http.Request) {
-	data := model.GetCourse()
+	id := getId(r.RequestURI)
+	data := model.GetCourse(id)
 	tmpl := tmplFiles("view/course/get-course.html")
 	tmpl.ExecuteTemplate(w, "content", data)
 }
