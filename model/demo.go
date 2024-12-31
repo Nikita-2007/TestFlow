@@ -4,7 +4,7 @@ package model
 func DemoUser() {
 	db := connect()
 	query := `
-	INSERT INTO User(Avatar, Name, Password, Email, DataBirth, Course, DataReg, Status, Rate) VALUES
+	INSERT INTO User(Avatar, Name, Password, Email, DataBirth, Course_id, DataReg, Status, Rate) VALUES
 		('../view/img/avatar.png', 'Вася Нечейный', '123456543211286756', 'vasya2000@gmail.com', '01-01-2001', 1, '01-01-2024', 'active', 0),
 		('../view/img/avatar.png', 'Екатерина Иванова', 'StrongP@$d123', 'katya.i@exale.com', '15-03-1998', 2, '29-12-2024', 'active', 75),
 		('../view/img/avatar.png', 'Александр Петров', 'PasswOrd@12', 'aleks.petrov@mail.ru', '22-04-1990', 3, '25-12-2024', 'active', 92),
@@ -18,6 +18,10 @@ func DemoUser() {
 		('../view/img/avatar.png', 'Андрей Сидоров', 'SuperSecretPw', 'andrey.sidorov@example.com', '03-03-1980', 11, '22-12-2024', 'active', 9),
 		('../view/img/avatar.png', 'Наталья Морозова', 'Passw0rd#123', 'natalia.morozova@gmail.com', '25-10-2004', 1, '29-12-2024', 'active', 45);
 	`
-	db.Exec(query)
+	data, err := db.Exec(query)
+	if err != nil {
+		panic(err)
+	}
+	println(data.RowsAffected())
 	db.Close()
 }

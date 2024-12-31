@@ -4,18 +4,16 @@ import "time"
 
 // Структура данных пользователей
 type User struct {
-	Id           int
-	Avatar       string
-	Name         string
-	Password     string
-	Email        string
-	DataBirth    string
-	Course       int
-	DataReg      string
-	TestsPassed  string
-	TestsCreated string
-	Status       string
-	Rate         int
+	Id        int
+	Name      string
+	Avatar    string
+	Password  string
+	Email     string
+	DataBirth string
+	Course    string
+	DataReg   string
+	Status    string
+	Rate      int
 }
 
 // Вывод всех пользователей
@@ -63,18 +61,12 @@ func GetUser(id int) *User {
 		&user.Status,
 		&user.Rate,
 	)
-	query2 := "SELECT * FROM Course WHERE id = $1"
-	data2 := db.QueryRow(query2, user.Course)
 	course := Course{}
-	data2.Scan(
-		&course.Id,
-		&course.Name,
-		&course.Icon,
-		&course.Background,
-		&course.Description,
-	)
-	//user.Course = course.Name
-	//Получил user.Name это название курса по айди пользователя
+	query = `SELECT Name FROM Course WHERE id = $1`
+	data = db.QueryRow(query, &user.Course)
+	data.Scan(&course.Name)
+	user.Course = course.Name
+
 	db.Close()
 	return &user
 }
@@ -84,7 +76,7 @@ func AddUser(name string, password string, email string, dataBirth string) int {
 	db := connect()
 	dataReg := time.Now().Format("2006-01-02")
 	avatar := "./view/img/avatar.png"
-	query := "INSERT INTO User (Avatar, Name, Password, Email, DataBirth, Course, DataReg, Status, Rate) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)"
+	query := "INSERT INTO User (Name, Avatar, Password, Email, DataBirth, Course, DataReg, Status, Rate) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)"
 	result, _ := db.Exec(query, avatar, name, password, email, dataBirth, 2, dataReg, "active", 0)
 	db.Close()
 	id, _ := result.LastInsertId()

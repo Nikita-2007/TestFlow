@@ -34,15 +34,16 @@ func tableUser() {
 
 	query := `CREATE TABLE IF NOT EXISTS User (
 		Id INTEGER PRIMARY KEY AUTOINCREMENT,
-		Name TEXT,
-		Avatar TEXT DEFAULT "./view/img/avatar.png",
-		Password TEXT,
-		Email TEXT,
+		Name TEXT NOT NULL,
+		Avatar TEXT DEFAULT "../view/img/avatar.png",
+		Password TEXT NOT NULL,
+		Email TEXT NOT NULL,
 		DataBirth TEXT,
-		Course INTEGER,
-		DataReg TEXT,
-		Status TEXT,
-		Rate INTEGER
+		Course_id INTEGER DEFAULT 1,
+		DataReg TEXT NOT NULL,
+		Status TEXT DEFAULT "active",
+		Rate INTEGER DEFAULT 0,
+		FOREIGN KEY (Course_id) REFERENCES tableCourse (Id)
 	)`
 	data, err := db.Exec(query)
 	if err != nil {
