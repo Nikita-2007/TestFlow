@@ -1,5 +1,6 @@
 {{define "content"}}
 {{template "header"}}
+<title>{{.Title}}</title>
 {{template "menu"}}
 <main>
     <h1>Контент index</h1>
@@ -7,7 +8,6 @@
     <div>Блок Дисциплин</div>
     <hr>
     <div>Блок Тестов</div>
-    {{.}}
 </main>
 {{template "footer"}}
 {{end}}

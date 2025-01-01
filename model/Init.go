@@ -20,8 +20,6 @@ func Init(DBMS, PATH string) {
 		tableCourse()
 		DataCourse() //Заполняем
 		tableUser()
-	} else {
-		backupDB()
 	}
 }
 

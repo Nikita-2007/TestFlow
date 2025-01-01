@@ -18,6 +18,7 @@ func Web(host, port string) {
 	http.HandleFunc("/author/", author)
 	http.HandleFunc("/admin/", admin)
 	http.HandleFunc("/demo-migration/", demo)
+	http.HandleFunc("/copy-DB/", copyDB)
 
 	http.HandleFunc("/create-user/", createUser)
 	http.HandleFunc("/get-user/{id}", getUser)
@@ -91,30 +92,54 @@ func getId(url string) int {
 // Функции страниц:
 
 func index(w http.ResponseWriter, r *http.Request) {
-	data := "Главная"
+	data := struct {
+		Title string
+	}{
+		Title: "TestFlow",
+	}
 	tmpl := tmplFiles("view/index.html")
 	tmpl.ExecuteTemplate(w, "content", data)
 }
 
 func about(w http.ResponseWriter, r *http.Request) {
-	data := "О проекте"
+	data := struct {
+		Title string
+	}{
+		Title: "О проекте",
+	}
 	tmpl := tmplFiles("view/about.html")
 	tmpl.ExecuteTemplate(w, "content", data)
 }
 
 func author(w http.ResponseWriter, r *http.Request) {
-	data := "Об авторе"
+	data := struct {
+		Title string
+	}{
+		Title: "Об авторе",
+	}
 	tmpl := tmplFiles("view/author.html")
 	tmpl.ExecuteTemplate(w, "content", data)
 }
 
 func admin(w http.ResponseWriter, r *http.Request) {
-	data := model.AllUser()
+	data := struct {
+		Title  string
+		User   []model.User
+		Course []model.Course
+	}{
+		Title:  "Админ-панель",
+		User:   *model.AllUser(),
+		Course: *model.AllCourses(),
+	}
 	tmpl := tmplFiles("view/admin.html")
 	tmpl.ExecuteTemplate(w, "content", data)
 }
 
 func demo(w http.ResponseWriter, r *http.Request) {
 	model.DemoUser()
+	http.Redirect(w, r, "/admin/", http.StatusSeeOther)
+}
+func copyDB(w http.ResponseWriter, r *http.Request) {
+	model.BackupDB()
 	http.Redirect(w, r, "/admin/", http.StatusSeeOther)
 }

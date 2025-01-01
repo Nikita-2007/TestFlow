@@ -1,31 +1,45 @@
 {{define "content"}}
 {{template "header"}}
+<title>{{.Title}}</title>
 {{template "menu"}}
 <main>
     <h1>Админ панель</h1>
     <hr>
-    <p>Инструментарий</p>
+    <h2>Инструментарий</h2>
     <div>
         <a href="/demo-migration/">Демо-миграция</a>
         <a href="/create-course/">Создать курс</a>
+        <a href="/copy-DB/">Резервная копия БД</a>
     </div>
     <hr>
-    <p>Список Дисциплин</p>
+    <h2>Список Дисциплин</h2>
     <hr>
-    <p>Список пользователей</p>
-    <p>Цикл</p>
-    {{range .}}
-    <p>
-        {{.Name}}
+    {{range .Course}}
         <div>
-            <a href="/get-user/{{.Id}}"> Пользователь </a></li>
-            <a href="/update-user/{{.Id}}"> Изменить </a> </li>
-            <a href="/delete-user/{{.Id}}"> Удалить </a> </li>
+            {{.Name}}
+            <a href="/get-course/{{.Id}}"> Дисциплина </a>
+            <a href="/update-course/{{.Id}}"> Изменить </a>
+            <a href="/delete-course/{{.Id}}"> Удалить </a>
         </div>
+        <br>
     {{else}}
         список пуст
     {{end}}
-    </p>
+
+    <hr>
+
+    <h2>Список пользователей</h2>
+    {{range .User}}
+        <div>
+            {{.Name}}
+            <a href="/get-user/{{.Id}}"> Пользователь </a>
+            <a href="/update-user/{{.Id}}"> Изменить </a>
+            <a href="/delete-user/{{.Id}}"> Удалить </a>
+        </div>
+        <br>
+    {{else}}
+        список пуст
+    {{end}}
 </main>
 {{template "footer"}}
 {{end}}

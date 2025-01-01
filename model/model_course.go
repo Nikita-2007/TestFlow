@@ -9,7 +9,7 @@ type Course struct {
 }
 
 // Вывод всех дисциплин
-func AllCoursec() *[]Course {
+func AllCourses() *[]Course {
 	db := connect()
 	query := "SELECT * FROM Course"
 	data, _ := db.Query(query)
@@ -30,8 +30,9 @@ func AllCoursec() *[]Course {
 	return &courses
 }
 
-func CreateCourse() int {
-	return 2
+func CreateCourse() Course {
+	course := Course{}
+	return course
 }
 
 // Получаем дисциплину
@@ -50,8 +51,9 @@ func GetCourse(id int) *Course {
 	db.Close()
 	return &course
 }
-func UpdateCourse() int {
-	return 4
+func UpdateCourse() Course {
+	course := Course{}
+	return course
 }
 
 func DeleteCourse() {
