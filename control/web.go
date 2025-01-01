@@ -29,7 +29,7 @@ func Web(host, port string) {
 	http.HandleFunc("/create-course/", createCourse)
 	http.HandleFunc("/get-course/{id}", getCourse)
 	http.HandleFunc("/update-course/{id}", updateCourse)
-	http.HandleFunc("/delelte-course/{id}", deleteCourse)
+	http.HandleFunc("/delete-course/{id}", deleteCourse)
 	/*
 
 		http.HandleFunc("/course/{id}/tests/", courseTests)
@@ -136,7 +136,7 @@ func admin(w http.ResponseWriter, r *http.Request) {
 }
 
 func demo(w http.ResponseWriter, r *http.Request) {
-	model.DemoUser()
+	model.Demo()
 	http.Redirect(w, r, "/admin/", http.StatusSeeOther)
 }
 func copyDB(w http.ResponseWriter, r *http.Request) {

@@ -30,9 +30,15 @@ func AllCourses() *[]Course {
 	return &courses
 }
 
-func CreateCourse() Course {
-	course := Course{}
-	return course
+// Создание дисциплины
+func CreateCourse(name, icon, background, description string) int {
+	db := connect()
+	query := `INSERT INTO Course (Name, Icon, Background, Description)
+		VALUES ($1, $2, $3, $4)`
+	result, _ := db.Exec(query, name, icon, background, description)
+	db.Close()
+	id, _ := result.LastInsertId()
+	return int(id)
 }
 
 // Получаем дисциплину
@@ -51,11 +57,19 @@ func GetCourse(id int) *Course {
 	db.Close()
 	return &course
 }
-func UpdateCourse() Course {
-	course := Course{}
-	return course
+
+// Измененние дисциплины
+func UpdateCourse(id int, name, icon, background, description string) {
+	db := connect()
+	query := `UPDATE Course SET Name=?, Icon=?, Background=?, Description=? WHERE id = ?`
+	db.Exec(query, name, icon, background, description, id)
+	db.Close()
 }
 
-func DeleteCourse() {
-
+// Удаление дисциплины
+func DeleteCourse(id int) {
+	db := connect()
+	query := `DELETE FROM Course WHERE id = $1`
+	db.Exec(query, id)
+	db.Close()
 }

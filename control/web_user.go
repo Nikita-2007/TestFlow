@@ -6,7 +6,7 @@ import (
 	"strconv"
 )
 
-// Создать пользователя
+// Контролер запроса создания пользователя
 func createUser(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "GET" {
 		// Выводим форму для заполнения
@@ -34,7 +34,7 @@ func createUser(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// Вывод пользователя
+// Контролер запроса вывода пользователя
 func getUser(w http.ResponseWriter, r *http.Request) {
 	id := getId(r.RequestURI)
 	data := struct {
@@ -48,7 +48,7 @@ func getUser(w http.ResponseWriter, r *http.Request) {
 	tmpl.ExecuteTemplate(w, "content", data)
 }
 
-// Редактировать пользователя
+// Контролер запроса изменения пользователя
 func updateUser(w http.ResponseWriter, r *http.Request) {
 	id := getId(r.RequestURI)
 	if r.Method == "GET" {
@@ -79,9 +79,9 @@ func updateUser(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// Удалить пользователя
+// Контролер запроса удаления пользователя
 func deleteUser(w http.ResponseWriter, r *http.Request) {
 	id := getId(r.RequestURI)
 	model.DeleteUser(id)
-	http.Redirect(w, r, "/", http.StatusSeeOther)
+	http.Redirect(w, r, "/admin", http.StatusSeeOther)
 }
