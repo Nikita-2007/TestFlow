@@ -6,11 +6,10 @@
     <h1>Дисциплины</h1>
     {{range .Course}}
     <p>
-        <p>{{.Name}}</p>
+        <h2>{{.Name}}</h2>
         <img src="{{.Icon}}" alt="" class="avatar">
-        <ul id="login">
-            <a href="/get-course/{{.Id}}"> Подробнее </a>
-        </ul>
+        <p>{{.Description}}</p>
+        <a href="/get-course/{{.Id}}"> Подробнее </a>
     {{else}}
         список пуст
     {{end}}

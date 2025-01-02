@@ -30,18 +30,17 @@ func Web(host, port string) {
 	http.HandleFunc("/get-course/{id}", getCourse)
 	http.HandleFunc("/update-course/{id}", updateCourse)
 	http.HandleFunc("/delete-course/{id}", deleteCourse)
+
+	http.HandleFunc("/create-test/", createTesting)
+	http.HandleFunc("/get-test/{id}/", getTesting)
+	http.HandleFunc("/update-test/{id}/", updateTesting)
+	http.HandleFunc("/delete-test/{id}", deleteTesting)
 	/*
 
 		http.HandleFunc("/course/{id}/tests/", courseTests)
 		http.HandleFunc("/course/{id}/users/", courseUsers)
 		http.HandleFunc("/course/{id}/add-user/", courseAddUser)
 		http.HandleFunc("/course/{id}/del-user/", courseDelUser)
-
-		http.HandleFunc("/create-test/", createTest)
-		http.HandleFunc("/test/{id}/", test)
-		http.HandleFunc("/test/{id}/setting/", test)
-		http.HandleFunc("/test/{id}/switch/", testSwitch)
-		http.HandleFunc("/test/{id}/delete/", testDelete)
 
 		http.HandleFunc("/test/{id}/users", testUsers)
 		http.HandleFunc("/test/{id}/user/{id}", testUser)
@@ -93,9 +92,13 @@ func getId(url string) int {
 
 func index(w http.ResponseWriter, r *http.Request) {
 	data := struct {
-		Title string
+		Title   string
+		Course  *[]model.Course
+		Testing *[]model.Testing
 	}{
-		Title: "TestFlow",
+		Title:   "TestFlow",
+		Course:  model.AllCourses(),
+		Testing: model.AllTests(),
 	}
 	tmpl := tmplFiles("view/index.html")
 	tmpl.ExecuteTemplate(w, "content", data)
