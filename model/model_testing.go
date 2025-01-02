@@ -52,7 +52,7 @@ func GetTest(id int) *Testing {
 	FROM Testing t
 	LEFT JOIN Course ON t.Course_id = Course.Id
 	LEFT JOIN User ON t.User_id = User.Id
-	WHERE u.Id = $1
+	WHERE t.Id = $1
 ;`
 	data := db.QueryRow(query, id)
 	testing := Testing{}

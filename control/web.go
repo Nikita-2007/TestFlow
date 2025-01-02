@@ -32,8 +32,8 @@ func Web(host, port string) {
 	http.HandleFunc("/delete-course/{id}", deleteCourse)
 
 	http.HandleFunc("/create-test/", createTesting)
-	http.HandleFunc("/get-test/{id}/", getTesting)
-	http.HandleFunc("/update-test/{id}/", updateTesting)
+	http.HandleFunc("/get-test/{id}", getTesting)
+	http.HandleFunc("/update-test/{id}", updateTesting)
 	http.HandleFunc("/delete-test/{id}", deleteTesting)
 	/*
 
