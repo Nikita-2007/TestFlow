@@ -22,7 +22,7 @@ func Init(DBMS, PATH string) {
 		tableUser()
 		tableQuestion()
 		tableTesting()
-		tableUserTestPassed()
+		tableUserTest()
 		tableTestQuestion()
 		//Миграции
 		DataCourse()
@@ -97,7 +97,6 @@ func tableQuestion() {
 	}
 	query := `CREATE TABLE IF NOT EXISTS Questions (
 		Id INTEGER PRIMARY KEY AUTOINCREMENT,
-		Testing_id INTEGER DEFAULT 0,
 		NumberQuestion INTEGER,
 		Question TEXT NOT NULL,
 		Correct INTEGER NOT NULL,
@@ -106,20 +105,19 @@ func tableQuestion() {
 		Answer_3 TEXT,
 		Answer_4 TEXT,
 		Answer_5 TEXT,
-		Answer_6 TEXT,
-		FOREIGN KEY (Testing_id) REFERENCES Testing (Id)
+		Answer_6 TEXT
 	)`
 	db.Exec(query)
 	db.Close()
 }
 
-// Связь пользователь-пройденые тесты
-func tableUserTestPassed() {
+// Связь пользователь-тесты
+func tableUserTest() {
 	db, err := sql.Open(Dbms, Path)
 	if err != nil {
 		panic(err)
 	}
-	query := `CREATE TABLE IF NOT EXISTS UserTestPassed (
+	query := `CREATE TABLE IF NOT EXISTS UserTest (
 		User_id INTEGER DEFAULT 0,
 		Testing_id INTEGER DEFAULT 0,
 		Date TEXT,
