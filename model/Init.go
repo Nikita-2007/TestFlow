@@ -22,6 +22,8 @@ func Init(DBMS, PATH string) {
 		tableUser()
 		tableQuestion()
 		tableTesting()
+		tableUserTestPassed()
+		tableTestQuestion()
 		//Миграции
 		DataCourse()
 	}
@@ -45,7 +47,7 @@ func tableUser() {
 		DataReg TEXT NOT NULL,
 		Status TEXT DEFAULT "active",
 		Rate INTEGER DEFAULT 0,
-		FOREIGN KEY (Course_id) REFERENCES tableCourse (Id)
+		FOREIGN KEY (Course_id) REFERENCES Course (Id)
 	)`
 	db.Exec(query)
 	db.Close()
@@ -78,8 +80,10 @@ func tableTesting() {
 		Id INTEGER PRIMARY KEY AUTOINCREMENT,
 		Name TEXT NOT NULL,
 		Course_id INTEGER DEFAULT 0,
+		User_id INTEGER DEFAULT 0,
 		Description TEXT,
-		FOREIGN KEY (Course_id) REFERENCES Course (Id)
+		FOREIGN KEY (Course_id) REFERENCES Course (Id),
+		FOREIGN KEY (User_id) REFERENCES User (Id)
 	)`
 	db.Exec(query)
 	db.Close()
@@ -104,6 +108,40 @@ func tableQuestion() {
 		Answer_5 TEXT,
 		Answer_6 TEXT,
 		FOREIGN KEY (Testing_id) REFERENCES Testing (Id)
+	)`
+	db.Exec(query)
+	db.Close()
+}
+
+// Связь пользователь-пройденые тесты
+func tableUserTestPassed() {
+	db, err := sql.Open(Dbms, Path)
+	if err != nil {
+		panic(err)
+	}
+	query := `CREATE TABLE IF NOT EXISTS UserTestPassed (
+		User_id INTEGER DEFAULT 0,
+		Testing_id INTEGER DEFAULT 0,
+		Date TEXT,
+		Result INTEGER DEFAULT 0,
+		FOREIGN KEY (User_id) REFERENCES User (Id),
+		FOREIGN KEY (Testing_id) REFERENCES Testing (Id)
+	)`
+	db.Exec(query)
+	db.Close()
+}
+
+// Связь тесты-вопросы
+func tableTestQuestion() {
+	db, err := sql.Open(Dbms, Path)
+	if err != nil {
+		panic(err)
+	}
+	query := `CREATE TABLE IF NOT EXISTS TestQuestion (
+		Testing_id INTEGER DEFAULT 0,
+		Question_id INTEGER DEFAULT 0,
+		FOREIGN KEY (Testing_id) REFERENCES Testing (Id),
+		FOREIGN KEY (Question_id) REFERENCES Questions (Id)
 	)`
 	db.Exec(query)
 	db.Close()

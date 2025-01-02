@@ -2,7 +2,6 @@ package model
 
 type Questions struct {
 	Id             int
-	Testing        string
 	NumberQuestion int
 	Question       int
 	Correct        int
