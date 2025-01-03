@@ -6,9 +6,9 @@
     <p>Контент Testing</p>
     {{.Testing}}
     <br><br><br>
-    <p>Контент Questions</p>
     {{range .Questions}}
-        <p>{{.}}</p>
+        <p>{{.NumberQuestion}}.{{.Question}}</p>
+        <p>{{.Answer_1}} {{.Answer_2}} {{.Answer_3}} {{.Answer_4}} {{.Answer_5}} {{.Answer_6}}</p>
     {{end}}
 </main>
 {{template "footer"}}

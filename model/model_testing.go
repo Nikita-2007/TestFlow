@@ -1,5 +1,7 @@
 package model
 
+import "strconv"
+
 type Testing struct {
 	Id          int
 	Name        string
@@ -33,9 +35,11 @@ func AllTests() *[]Testing {
 // Создание теста
 func CreateTest(name, course, user, description string) int {
 	db := connect()
-	query := `INSERT INTO Testing (Name, Course, User, Description)
+	course_id, _ := strconv.Atoi(course)
+	user_id, _ := strconv.Atoi(user)
+	query := `INSERT INTO Testing (Name, Course_id, User_id, Description)
 		VALUES ($1, $2, $3, $4)`
-	result, _ := db.Exec(query, name, course, user, description)
+	result, _ := db.Exec(query, name, course_id, user_id, description)
 	db.Close()
 	id, _ := result.LastInsertId()
 	//Добавить подвязку вопросов

@@ -10,16 +10,18 @@ import (
 func createTesting(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "GET" {
 		data := struct {
-			Title string
+			Title   string
+			Courses *[]model.Course
 		}{
-			Title: "Создание теста",
+			Title:   "Создание теста",
+			Courses: model.AllCourses(),
 		}
 		tmpl := tmplFiles("view/test/create-test.html")
 		tmpl.ExecuteTemplate(w, "content", data)
 	} else if r.Method == "POST" {
 		name := r.FormValue("name")
 		course := r.FormValue("course")
-		user := r.FormValue("user")
+		user := "1" // Заменить на авторизованного пользователя
 		description := r.FormValue("description")
 		id := model.CreateTest(name, course, user, description)
 		http.Redirect(w, r, "/get-test/"+strconv.Itoa(id), http.StatusSeeOther)
