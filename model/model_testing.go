@@ -1,7 +1,5 @@
 package model
 
-import "fmt"
-
 type Testing struct {
 	Id          int
 	Name        string
@@ -64,7 +62,6 @@ func GetTest(id int) *Testing {
 		&testing.Description,
 	)
 	db.Close()
-	fmt.Println(testing) ///////////////////////////////////////////////////////
 	//Добавить подвязку вопросов
 	return &testing
 }

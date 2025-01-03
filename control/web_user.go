@@ -85,3 +85,16 @@ func deleteUser(w http.ResponseWriter, r *http.Request) {
 	model.DeleteUser(id)
 	http.Redirect(w, r, "/admin", http.StatusSeeOther)
 }
+
+// Контролер запроса всех рользователей
+func allUser(w http.ResponseWriter, r *http.Request) {
+	data := struct {
+		Title string
+		Users []model.User
+	}{
+		Title: "Все пользователи",
+		Users: *model.AllUser(),
+	}
+	tmpl := tmplFiles("view/user/users.html")
+	tmpl.ExecuteTemplate(w, "content", data)
+}

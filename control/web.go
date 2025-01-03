@@ -22,6 +22,7 @@ func Web(host, port string) {
 
 	http.HandleFunc("/create-user/", createUser)
 	http.HandleFunc("/get-user/{id}", getUser)
+	http.HandleFunc("/users/", allUser)
 	http.HandleFunc("/update-user/{id}", updateUser)
 	http.HandleFunc("/delete-user/{id}", deleteUser)
 
@@ -35,23 +36,6 @@ func Web(host, port string) {
 	http.HandleFunc("/get-test/{id}", getTesting)
 	http.HandleFunc("/update-test/{id}", updateTesting)
 	http.HandleFunc("/delete-test/{id}", deleteTesting)
-	/*
-
-		http.HandleFunc("/course/{id}/tests/", courseTests)
-		http.HandleFunc("/course/{id}/users/", courseUsers)
-		http.HandleFunc("/course/{id}/add-user/", courseAddUser)
-		http.HandleFunc("/course/{id}/del-user/", courseDelUser)
-
-		http.HandleFunc("/test/{id}/users", testUsers)
-		http.HandleFunc("/test/{id}/user/{id}", testUser)
-
-		http.HandleFunc("/quests/", quests)
-		http.HandleFunc("/create-quest/", createQuest)
-		http.HandleFunc("/quest/{id}/", quest)
-		http.HandleFunc("/quest/{id}/setting/", questsSetting)
-		http.HandleFunc("/quest/{id}/delete/", questDelete)
-
-	*/
 
 	//Сообщение в терминал
 	t := time.Now()

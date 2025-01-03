@@ -3,8 +3,13 @@
 <title>{{.Title}}</title>
 {{template "menu"}}
 <main>
-    Контент get-test
+    <p>Контент Testing</p>
     {{.Testing}}
+    <br><br><br>
+    <p>Контент Questions</p>
+    {{range .Questions}}
+        <p>{{.}}</p>
+    {{end}}
 </main>
 {{template "footer"}}
 {{end}}
