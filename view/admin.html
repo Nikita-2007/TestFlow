@@ -41,6 +41,21 @@
     {{else}}
         список пуст
     {{end}}
+
+    <hr>
+
+    <h2>Список тестов</h2>
+    {{range .Testing}}
+        <div>
+            {{.Name}}
+            <a href="/get-test/{{.Id}}"> Тест </a>
+            <a href="/update-test/{{.Id}}"> Изменить </a>
+            <a href="/delete-test/{{.Id}}"> Удалить </a>
+        </div>
+        <br>
+    {{else}}
+        список пуст
+    {{end}}
 </main>
 {{template "footer"}}
 {{end}}

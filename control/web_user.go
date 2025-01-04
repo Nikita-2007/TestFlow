@@ -55,12 +55,12 @@ func updateUser(w http.ResponseWriter, r *http.Request) {
 		// Выводим форму для заполнения
 		data := struct {
 			Title  string
-			User   model.User
-			Course []model.Course
+			User   *model.User
+			Course *[]model.Course
 		}{
 			Title:  "Обновление пользователя",
-			User:   *model.GetUser(id),
-			Course: *model.AllCourses(),
+			User:   model.GetUser(id),
+			Course: model.AllCourses(),
 		}
 		tmpl := tmplFiles("view/user/update-user.html")
 		tmpl.ExecuteTemplate(w, "content", data)

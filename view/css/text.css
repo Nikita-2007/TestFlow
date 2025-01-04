@@ -1,0 +1,57 @@
+.title {
+    color: rgb(247, 228, 124);
+    display: block;
+    font-size: 12em;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif, cursive;
+  
+    -webkit-text-shadow: 0.3125em 0.3125em 0.3125em rgba(0, 0, 0, 0.75);
+    -moz-text-shadow: 0.3125em 0.3125em 0.3125em rgba(0, 0, 0, 0.75);
+    text-shadow: 0.1em 0.1em 0.15em rgba(0, 0, 0, 0.75);
+}
+  
+h2 {
+    font-size: 1.5em;
+    text-align: center;
+    text-shadow: 0.1em 0.1em 0.15em rgba(0, 0, 0, 0.25);
+}
+
+h3 {
+    text-align: center;
+    font-style: italic;
+}
+
+a {
+    text-decoration: none;
+    background-color: #333;
+    width: 8em;
+    color: #fff;
+    border: none;
+    padding: 0.625em;
+    margin: 0.5em;
+    border-radius: 0.3125em;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+a:hover {
+    background-color: #e2e2e2;
+    color: #000000;
+}
+
+button {
+    background-color: #333;
+    width: 8em;
+    color: #fff;
+    border: none;
+    padding: 0.625em;
+    border-radius: 0.3125em;
+    font-size: 1.5em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #e2e2e2;
+    color: #000000;
+}

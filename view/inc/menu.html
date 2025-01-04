@@ -8,13 +8,17 @@
     </div>
 </header>
 
-
 <div id="menu">
-    <a href="/">Главная</a></li>
-    <a href="/about">О проекте</a></li>
-    <a href="/author">Авторы</a></li>
-    <a href="/courses">Дисциплины</a></li>
-    <a href="/create-user">Регистрация</a></li>
-    <a href="/admin">Админ-панель</a></li>
+    <a href="/">Главная</a>
+    <a href="/about">О проекте</a>
+    <a href="/author">Авторы</a>
+    <a href="/courses">Дисциплины</a>
+    <a href="/admin">Админ-панель</a>
+    <a href="#" id="entry">Войти</a>
+    <a href="/create-user" id="register">Регистрация</a>
+    <form action="/login-pass">
+        <input type="hidden" name="login" id="login" placeholder="Логин">
+        <input type="hidden" name="pass" id="pass" placeholder="Пароль">
+    </form>
 </div>
 {{end}}

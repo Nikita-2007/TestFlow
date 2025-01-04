@@ -73,7 +73,7 @@ func GetTest(id int) *Testing {
 // Измененние теста
 func UpdateTest(id int, name, course, user, description string) {
 	db := connect()
-	query := `UPDATE Testing SET Name=?, Course=?, User=?, Description=? WHERE id = ?`
+	query := `UPDATE Testing SET Name=?, Course_id=?, User_id=?, Description=? WHERE id = ?`
 	db.Exec(query, name, course, user, description, id)
 	db.Close()
 	//Добавить подвязку вопросов

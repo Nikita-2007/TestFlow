@@ -10,6 +10,8 @@ import (
 	"time"
 )
 
+var User string = "1"
+
 // Формируем список урлов страниц и функций их обработки
 func Web(host, port string) {
 	//Урлы страниц
@@ -36,6 +38,8 @@ func Web(host, port string) {
 	http.HandleFunc("/get-test/{id}", getTesting)
 	http.HandleFunc("/update-test/{id}", updateTesting)
 	http.HandleFunc("/delete-test/{id}", deleteTesting)
+
+	http.HandleFunc("/login-pass", loginPass)
 
 	//Сообщение в терминал
 	t := time.Now()
@@ -110,13 +114,15 @@ func author(w http.ResponseWriter, r *http.Request) {
 
 func admin(w http.ResponseWriter, r *http.Request) {
 	data := struct {
-		Title  string
-		User   []model.User
-		Course []model.Course
+		Title   string
+		User    *[]model.User
+		Course  *[]model.Course
+		Testing *[]model.Testing
 	}{
-		Title:  "Админ-панель",
-		User:   *model.AllUser(),
-		Course: *model.AllCourses(),
+		Title:   "Админ-панель",
+		User:    model.AllUser(),
+		Course:  model.AllCourses(),
+		Testing: model.AllTests(),
 	}
 	tmpl := tmplFiles("view/admin.html")
 	tmpl.ExecuteTemplate(w, "content", data)
@@ -126,7 +132,15 @@ func demo(w http.ResponseWriter, r *http.Request) {
 	model.Demo()
 	http.Redirect(w, r, "/admin/", http.StatusSeeOther)
 }
+
 func copyDB(w http.ResponseWriter, r *http.Request) {
 	model.BackupDB()
 	http.Redirect(w, r, "/admin/", http.StatusSeeOther)
+}
+
+func loginPass(w http.ResponseWriter, r *http.Request) {
+	login := r.FormValue("login")
+	pass := r.FormValue("pass")
+	model.LoginPass(login, pass)
+	//http.Redirect(w, r, "/get-user/"+strconv.Itoa(id), http.StatusSeeOther)
 }

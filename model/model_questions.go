@@ -17,38 +17,29 @@ type Questions struct {
 func GetQuestions(id int) *[]Questions {
 	db := connect()
 	query := `
-		SELECT Question_id
-		FROM TestQuestion
-		WHERE Testing_id = $1
-	;`
-	arr, _ := db.Query(query, id)
+    SELECT q.Id, q.NumberQuestion, q.Question, q.Correct,
+      q.Answer_1, q.Answer_2, q.Answer_3, q.Answer_4, q.Answer_5, q.Answer_6
+    FROM TestQuestion tq
+    JOIN Questions q ON q.Id = tq.Question_id
+    WHERE tq.Testing_id = $1
+  ;`
+	data, _ := db.Query(query, id)
 	questions := []Questions{}
-	var idq string
-	for arr.Next() {
-		arr.Scan(&idq)
-		query = `
-		SELECT Id, NumberQuestion, Question, Correct,
-				Answer_1, Answer_2, Answer_3, Answer_4, Answer_5, Answer_6
-			FROM Questions
-			WHERE Id = $1
-		;`
-		data, _ := db.Query(query, idq)
-		for data.Next() {
-			question := Questions{}
-			data.Scan(
-				&question.Id,
-				&question.NumberQuestion,
-				&question.Question,
-				&question.Correct,
-				&question.Answer_1,
-				&question.Answer_2,
-				&question.Answer_3,
-				&question.Answer_4,
-				&question.Answer_5,
-				&question.Answer_6,
-			)
-			questions = append(questions, question)
-		}
+	for data.Next() {
+		question := Questions{}
+		data.Scan(
+			&question.Id,
+			&question.NumberQuestion,
+			&question.Question,
+			&question.Correct,
+			&question.Answer_1,
+			&question.Answer_2,
+			&question.Answer_3,
+			&question.Answer_4,
+			&question.Answer_5,
+			&question.Answer_6,
+		)
+		questions = append(questions, question)
 	}
 	db.Close()
 
