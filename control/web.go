@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-var User int = 1
+var User int = 0
 
 // Формируем список урлов страниц и функций их обработки
 func Web(host, port string) {
@@ -114,19 +114,24 @@ func author(w http.ResponseWriter, r *http.Request) {
 }
 
 func admin(w http.ResponseWriter, r *http.Request) {
-	data := struct {
-		Title   string
-		User    *[]model.User
-		Course  *[]model.Course
-		Testing *[]model.Testing
-	}{
-		Title:   "Админ-панель",
-		User:    model.AllUser(),
-		Course:  model.AllCourses(),
-		Testing: model.AllTests(),
+	if User == 1 {
+		data := struct {
+			Title   string
+			User    *[]model.User
+			Course  *[]model.Course
+			Testing *[]model.Testing
+		}{
+			Title:   "Админ-панель",
+			User:    model.AllUser(),
+			Course:  model.AllCourses(),
+			Testing: model.AllTests(),
+		}
+		tmpl := tmplFiles("view/admin.html")
+		tmpl.ExecuteTemplate(w, "content", data)
+	} else {
+		http.Redirect(w, r, "/", http.StatusSeeOther)
 	}
-	tmpl := tmplFiles("view/admin.html")
-	tmpl.ExecuteTemplate(w, "content", data)
+
 }
 
 func demo(w http.ResponseWriter, r *http.Request) {

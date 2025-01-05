@@ -105,9 +105,26 @@ func DeleteUser(id int) {
 }
 
 func LoginPass(login, pass string) int {
-	// Дописать проверку логина / пароля и возврат ID
-	id := 0
-	println(login, pass)
-
-	return id
+	db := connect()
+	query := `
+		SELECT Id, Name, Password
+		FROM User
+		WHERE Name = $1
+	;`
+	data := db.QueryRow(query, login)
+	user := struct {
+		Id       int
+		Name     string
+		Password string
+	}{}
+	data.Scan(
+		&user.Id,
+		&user.Name,
+		&user.Password,
+	)
+	db.Close()
+	if pass == user.Password {
+		return user.Id
+	}
+	return 0
 }

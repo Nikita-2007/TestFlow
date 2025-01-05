@@ -5,16 +5,18 @@
 <main>
     <h1>Дисциплины</h1>
     <hr>
+    <section>
     {{range .Course}}
-    <p>
         <h2>{{.Name}}</h2>
-        <img src="{{.Icon}}" alt="" class="avatar">
-        <p>{{.Description}}</p>
-        <a href="/get-course/{{.Id}}"> Подробнее </a>
+        <div class="courses">
+            <div class="content-courses">{{.Description}}</div>
+            <div class="avatar-courses"><img src="{{.Icon}}" alt=""></div>
+        </div>
+        <a href="/get-course/{{.Id}}"><button>Подробнее</button></a>
     {{else}}
         список пуст
     {{end}}
-    </p>
+</section>
 </main>
 {{template "footer"}}
 {{end}}

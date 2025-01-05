@@ -77,3 +77,19 @@ button:hover {
 input {
     height: 2em;
 }
+
+ul {
+    list-style: none;
+    padding-left: 20px;
+    }
+ul li::before {
+    content: "• ";
+    color: #555;
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
+.highlight {
+    font-weight: bold;
+}
