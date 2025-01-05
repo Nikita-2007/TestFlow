@@ -4,7 +4,7 @@ body, html {
     color: #333;
     background-color: #808080;
 }
-  
+
 header {
     height: 50%;
     color: #fff;
@@ -20,15 +20,24 @@ header {
 }
 
 .header-content {
+    text-align: center;
     position: relative;
     z-index: 1;
+}
+
+menu {
+    display: flex;
+    background-color: #292929;
+    margin: 0;
+    padding: 1.25em 10% 1em 9%;
+    text-align: center;
 }
   
 main {
     width: 80%;
-    padding: 1.875em;
-    background-color: #c5c5c5;
     margin: auto;
+    padding: 1em;
+    background-color: #c5c5c5;
 }
 
 section {
@@ -46,18 +55,28 @@ section {
 }
 
 footer {
-    background-color: #333;
+    display: flex;
+    background-color: dimgrey;
     color: #fff;
     padding: 1.25em 0;
-    text-align: center;
-}
-
-#menu {
-    background-color: #292929;
-    padding: 1.5em 1.25em;
-    text-align: center;
+    align-items: center;
+    justify-content: center;
 }
 
 .col {
-    border: solid 1px red;
+    display: block;
+}
+
+.row {
+    display: flex;
+}
+
+.right {
+    margin-right: auto;
+    display: inherit;
+}
+
+.left {
+    margin-left: auto;
+    display: inherit;
 }
