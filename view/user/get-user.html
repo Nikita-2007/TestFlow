@@ -3,17 +3,55 @@
 <title>{{.Title}}</title>
 {{template "menu"}}
 <main>
-    <h1>Пользователь {{.User.Id}}</h1>
+    <h1>Профиль пользовалетя</h1>
     <hr>
-    <div>
-        <p>Имя: {{.User.Name}}</p>
-        <img src="{{.User.Avatar}}" alt="" class="avatar">
-        <p>Почта: {{.User.Email}}</p>
-        <p>Дата рождения: {{.User.DataBirth}}</p>
-        <p>Дисциплина: {{.User.Course}}</p>
-        <p>Заригистрировался: {{.User.DataReg}}</p>
-        <p>Статус: {{.User.Status}}</p>
-        <p>Рейтинг %: {{.User.Rate}}</p>
+    <div class="user-profile">
+        <div class="user-profile-page">
+            <div class="user-id">ID пользователя: <span id="user-id-value">{{.User.Id}}</span></div>
+            <div class="profile-header">
+                 <img src="{{.User.Avatar}}" alt="Аватар пользователя" class="profile-avatar">
+                 <h1 class="username">{{.User.Name}}</h1>
+            </div>
+             <div class="profile-content">
+                 <div class="profile-details">
+                     <div class="detail-item">
+                         <span class="detail-label">Почта:</span>
+                         <span class="detail-value">{{.User.Email}}</span>
+                     </div>
+                     <div class="detail-item">
+                         <span class="detail-label">Дата рождения:</span>
+                         <span class="detail-value">{{.User.DataBirth}}</span>
+                     </div>
+                      <div class="detail-item">
+                         <span class="detail-label">Дата регистрации:</span>
+                         <span class="detail-value">{{.User.DataReg}}</span>
+                     </div>
+                     <div class="detail-item">
+                         <span class="detail-label">Статус:</span>
+                         <span class="detail-value">{{.User.Status}}</span>
+                     </div>
+                     <div class="detail-item">
+                        <span class="detail-label">Рейтинг:</span>
+                        <span class="detail-value rating">{{.User.Rate}}</span>
+                     </div>
+                     <div class="detail-item">
+                        <span class="detail-label">Дисциплина:</span>
+                        <a href="{{.User.Id}}"><span class="highlight">{{.User.Course}}</span></a>
+                     </div>
+                 </div>
+    
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Пройденные тесты:</span>
+                        <span class="stat-value">список</span>
+                    </div>
+                     <div class="stat-item">
+                        <span class="stat-label">Созданные тесты:</span>
+                        <span class="stat-value">список</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </main>
 {{template "footer"}}

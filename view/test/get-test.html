@@ -9,17 +9,18 @@
         <h2>{{.Testing.Course}}</h2>
         <h2>{{.Testing.Name}}</h2>
         <h3>{{.Testing.Description}}</h3>
+        <p>Всего вопросов: {{.Сount}}</p>
         <form method="POST">
-            <br>
+            <input type="text" name="count" value="{{.Сount}}" hidden>
             {{range .Questions}}
                 <br>
                 <div><b>{{.NumberQuestion}}. {{.Question}}</b></div>
-                <div><input type="radio" name="{{.NumberQuestion}}" value="{{.Answer_1}}">{{.Answer_1}}</div>
-                <div><input type="radio" name="{{.NumberQuestion}}" value="{{.Answer_2}}">{{.Answer_2}}</div>
-                <div><input type="radio" name="{{.NumberQuestion}}" value="{{.Answer_3}}">{{.Answer_3}}</div>
-                <div><input type="radio" name="{{.NumberQuestion}}" value="{{.Answer_4}}">{{.Answer_4}}</div>
-                <div><input type="radio" name="{{.NumberQuestion}}" value="{{.Answer_5}}">{{.Answer_5}}</div>
-                <div><input type="radio" name="{{.NumberQuestion}}" value="{{.Answer_6}}">{{.Answer_6}}</div>
+                <div><input type="radio" name="{{.NumberQuestion}}" value="1">{{.Answer_1}}</div>
+                <div><input type="radio" name="{{.NumberQuestion}}" value="2">{{.Answer_2}}</div>
+                <div><input type="radio" name="{{.NumberQuestion}}" value="3">{{.Answer_3}}</div>
+                <div><input type="radio" name="{{.NumberQuestion}}" value="4">{{.Answer_4}}</div>
+                <div><input type="radio" name="{{.NumberQuestion}}" value="5">{{.Answer_5}}</div>
+                <div><input type="radio" name="{{.NumberQuestion}}" value="6">{{.Answer_6}}</div>
                 <br>
             {{end}}
             <br><br>

@@ -32,7 +32,10 @@
     background-color: lightgrey;
     color: black;
 }
-
+a {
+    text-decoration: none;
+    color: #333;
+}
 h1 {
     font-size: 3em;
     margin-left: 1.25em;
@@ -81,7 +84,8 @@ input {
 ul {
     list-style: none;
     padding-left: 20px;
-    }
+}
+
 ul li::before {
     content: "• ";
     color: #555;
@@ -90,6 +94,20 @@ ul li::before {
     width: 1em;
     margin-left: -1em;
 }
+
 .highlight {
     font-weight: bold;
+}
+
+.detail-value {
+    color: #666;
+}
+
+.stat-label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.rating {
+    color: #28a745;
 }

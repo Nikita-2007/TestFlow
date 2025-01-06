@@ -5,16 +5,23 @@
 <main>
     <h1>Тестирования</h1>
     <hr>
-    {{range .Tests}}
-    <p>
-        <h2>{{.Name}}</h2>
-        <p>Дисциплина: <b>{{.Course}}</b>, автор: <b>{{.User}}</b></p>
-        <p><u>Описание:</u> {{.Description}}</p>
-        <a href="/get-test/{{.Id}}"> Подробнее </a>
-    {{else}}
-        список пуст
-    {{end}}
-    </p>
+    <section>
+        <h2>Список всех тестов и опросов</h2>
+        <div class="list">
+            {{range .Tests}}
+            <div class="test-card">
+                <div><img src="../view/img/course/icon/algorithmization.png" alt="" class="test-icon"></div>
+                <div class="test-content">
+                    <h2 class="p-title">{{.Name}}</h2>
+                    <p>{{.Description}}</p>
+                </div>
+                <div><a href="/get-test/{{.Id}}"><button class="test-button">Пройти тест</button></a></div>
+            </div>
+            {{else}}
+                <p>список пуст</p>
+            {{end}}
+        </div>
+    </section>
 </main>
 {{template "footer"}}
 {{end}}

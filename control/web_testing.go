@@ -68,17 +68,38 @@ func updateTesting(w http.ResponseWriter, r *http.Request) {
 // Контролер запроса теста
 func getTesting(w http.ResponseWriter, r *http.Request) {
 	id := getId(r.RequestURI)
-	data := struct {
-		Title     string
-		Testing   *model.Testing
-		Questions *[]model.Questions
-	}{
-		Title:     "Тестирование",
-		Testing:   model.GetTest(id),
-		Questions: model.GetQuestions(id),
+	arr := model.GetQuestions(id)
+	count := len(*arr)
+	if r.Method == "GET" {
+		data := struct {
+			Title     string
+			Testing   *model.Testing
+			Questions *[]model.Questions
+			Сount     int
+		}{
+			Title:     "Тестирование",
+			Testing:   model.GetTest(id),
+			Questions: arr,
+			Сount:     count,
+		}
+		tmpl := tmplFiles("view/test/get-test.html")
+		tmpl.ExecuteTemplate(w, "content", data)
+	} else if r.Method == "POST" {
+		r.ParseForm()
+		count, _ := strconv.Atoi(r.FormValue("count"))
+		arr := []int{}
+		for i := 1; i <= count; i++ {
+			a, _ := strconv.Atoi(r.FormValue(strconv.Itoa(i)))
+			if a > 0 {
+				arr = append(arr, a)
+			} else {
+				arr = append(arr, 0)
+			}
+		}
+		model.SetResult(User, id, arr)
+		//Редирект на результат
+		http.Redirect(w, r, "/", http.StatusSeeOther)
 	}
-	tmpl := tmplFiles("view/test/get-test.html")
-	tmpl.ExecuteTemplate(w, "content", data)
 }
 
 // Контролер запроса удаления теста
