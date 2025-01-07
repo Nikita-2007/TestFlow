@@ -6,6 +6,7 @@ type Testing struct {
 	Id          int
 	Name        string
 	Course      string
+	CourseIcon  string
 	User        string
 	Description string
 }
@@ -14,7 +15,7 @@ type Testing struct {
 func AllTests() *[]Testing {
 	db := connect()
 	query := `
-		SELECT t.Id, t.Name, c.Name, u.Name, t.Description
+		SELECT t.Id, t.Name, c.Name, c.Icon, u.Name, t.Description
 		FROM Testing t
 		LEFT JOIN Course c ON t.Course_id = c.Id
 		LEFT JOIN User u ON t.User_id = u.Id
@@ -27,6 +28,7 @@ func AllTests() *[]Testing {
 			&test.Id,
 			&test.Name,
 			&test.Course,
+			&test.CourseIcon,
 			&test.User,
 			&test.Description,
 		)

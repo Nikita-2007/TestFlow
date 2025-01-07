@@ -39,15 +39,24 @@
                         <a href="{{.User.Id}}"><span class="highlight">{{.User.Course}}</span></a>
                      </div>
                  </div>
-    
                 <div class="profile-stats">
                     <div class="stat-item">
                         <span class="stat-label">Пройденные тесты:</span>
-                        <span class="stat-value">список</span>
-                    </div>
-                     <div class="stat-item">
-                        <span class="stat-label">Созданные тесты:</span>
-                        <span class="stat-value">список</span>
+                        <table>
+                            {{range .UserTest}}
+                            <tr class="line">
+                                <td><img src="{{.Icon}}" class="sign"></td>
+                                <td><b>{{.NameC}}</b></td>
+                                <td><b>{{.NameT}}</b></td>
+                                <td><b>{{.Date}}</b></td>
+                                <td><img src="../view/img/icon/star.png" class="sign"></a></td>
+                                <td><b>{{.Result}}</b></td>
+                                <td><a href="/get-test/{{.IdT}}" title="Подробнее"><img src="../view/img/icon/next.png" class="sign"></a></td>
+                            </tr>
+                            {{else}}
+                                <span class="stat-value">Ни один тест не пройден</span>
+                            {{end}}
+                        </table>
                     </div>
                 </div>
             </div>

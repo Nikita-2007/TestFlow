@@ -241,3 +241,79 @@ td {
     flex-direction: column;
     margin-bottom: 20px;
 }
+
+/*Дисциплина*/
+.discipline-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    padding: 2em;
+    box-sizing: border-box;
+}
+
+.background-image-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.background-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.6;
+    filter: blur(4px);
+}
+
+.content {
+    text-align: center;
+    z-index: 1;
+    background-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px); /* Добавляем размытие фона контента */
+    padding: 40px;
+    border-radius: 2em;
+    width: 80%;
+    max-width: 40em;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease-in-out;
+}
+
+.content:hover {
+     transform: scale(1.02);
+}
+
+.icon-container {
+    margin-bottom: 2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon-с {
+     width: 7em;
+     height: 7em;
+     object-fit: contain; /* Сохраняет пропорции иконки */
+}
+
+.title-с {
+    font-size: 2.5em;
+    margin-bottom: 15px;
+    margin-left: auto;
+    text-shadow: 1px 1px 2px #000;
+    color: #fff;
+}
+
+.description {
+    font-size: 1.2em;
+    line-height: 1.6;
+    text-shadow: 1px 1px 2px #000;
+    color: #0f0f0f;
+    opacity: 0.9;
+}

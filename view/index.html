@@ -14,7 +14,7 @@
                 <h2 class="p-title">{{.Name}}</h2>
             </a>
             {{else}}
-                <p>список пуст</p>
+                <p>Список пуст</p>
             {{end}}
         </div>
     </section>
@@ -23,7 +23,7 @@
         <div class="list">
             {{range .Testing}}
             <div class="test-card">
-                <div><img src="../view/img/course/icon/algorithmization.png" alt="" class="test-icon"></div>
+                <div><img src="{{.CourseIcon}}" alt="" class="test-icon"></div>
                 <div class="test-content">
                     <h2 class="p-title">{{.Name}}</h2>
                     <p>{{.Description}}</p>
@@ -31,7 +31,7 @@
                 <div><a href="/get-test/{{.Id}}"><button class="test-button">Пройти тест</button></a></div>
             </div>
             {{else}}
-                <p>список пуст</p>
+                <p>Список пуст</p>
             {{end}}
         </div>
     </section>

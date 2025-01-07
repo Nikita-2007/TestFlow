@@ -38,11 +38,13 @@ func createUser(w http.ResponseWriter, r *http.Request) {
 func getUser(w http.ResponseWriter, r *http.Request) {
 	id := getId(r.RequestURI)
 	data := struct {
-		Title string
-		User  *model.User
+		Title    string
+		User     *model.User
+		UserTest *[]model.UserTest
 	}{
-		Title: "Профиль пользователя",
-		User:  model.GetUser(id),
+		Title:    "Профиль пользователя",
+		User:     model.GetUser(id),
+		UserTest: model.GetAllResult(id),
 	}
 	tmpl := tmplFiles("view/user/get-user.html")
 	tmpl.ExecuteTemplate(w, "content", data)

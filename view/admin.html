@@ -10,6 +10,7 @@
         <div>
             <a href="/demo-migration/"><button>Миграция</button></a>
             <a href="/create-course/"><button>Создать курс</button></a>
+            <a href="/create-test/"><button>Создать тест</button></a>
             <a href="/copy-DB/"><button>Копия БД</button></a>
             <a href="/users/"><button>Пользователи</button></a>
         </div>
@@ -21,14 +22,14 @@
             <tr class="line">
                 <td>Дисциплина:</td>
                 <td><img src="{{.Icon}}" class="sign"></td>
-                <td><b>{{.Name}}</b><td>
+                <td><b>{{.Name}}</b></td>
                 <td>(можно вставить краткое описание обрезав длинну текста)</td>
                 <td><a href="/get-course/{{.Id}}" title="Открыть"><img src="../view/img/icon/eye.png" class="sign"></a></td>
                 <td><a href="/update-course/{{.Id}}" title="Изменить"><img src="../view/img/icon/edit.png" class="sign"></a></td>
                 <td><a href="/delete-course/{{.Id}}" title="Удалить"><img src="../view/img/icon/del.png" class="sign"></a></td>
             </tr>
         {{else}}
-            <p>список пуст</p>
+            <p>Список пуст</p>
         {{end}}
         </table>
     </section>
@@ -52,7 +53,7 @@
             <td><a href="/delete-user/{{.Id}}" title="Удалить"><img src="../view/img/icon/del.png" class="sign"></a></td>
         </tr>
         {{else}}
-            <p>список пуст</p>
+            <p>Список пуст</p>
         {{end}}
         </table>
     </section>
@@ -72,7 +73,7 @@
                 <td><a href="/delete-test/{{.Id}}" title="Удалить"><img src="../view/img/icon/del.png" class="sign"></a></td>
             </tr>
         {{else}}
-            <p>список пуст</p>
+            <p>Список пуст</p>
         {{end}}
         </table>
     </section>

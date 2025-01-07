@@ -11,19 +11,49 @@ type Result struct {
 	Rate    int
 }
 
-// Смотрим результаттеста
-func GetResult(user, test int) []Result {
+type UserTest struct {
+	Date   string
+	Result int
+	NameT  string
+	NameC  string
+	Icon   string
+	IdT    int
+}
+
+// Смотрим результат теста
+func GetResult(user, test int) *[]Result {
 	println(user, test)
 	arr := []Result{}
 
-	return arr
+	return &arr
 }
 
-func GetAllResult(user int) []Result {
-	println(user)
-	arr := []Result{}
-
-	return arr
+// Смотрим результаты всех тестов одного пользователя
+func GetAllResult(user int) *[]UserTest {
+	db := connect()
+	query := `
+		SELECT ut.Date, ut.Result, t.Name, c.Name, c.Icon, t.Id
+		FROM UserTest ut
+		JOIN Testing t ON t.Id = ut.Testing_id
+		JOIN Course c ON c.Id = t.Course_id
+		WHERE ut.User_id = $1
+  	;`
+	data, _ := db.Query(query, user)
+	arr := []UserTest{}
+	for data.Next() {
+		ut := UserTest{}
+		data.Scan(
+			&ut.Date,
+			&ut.Result,
+			&ut.NameT,
+			&ut.NameC,
+			&ut.Icon,
+			&ut.IdT,
+		)
+		arr = append(arr, ut)
+	}
+	db.Close()
+	return &arr
 }
 
 // Вносим результат прохождения теста
