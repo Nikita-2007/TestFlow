@@ -5,6 +5,7 @@ import (
 	"TestFlow/model"
 	"TestFlow/view"
 	"encoding/json"
+	"flag"
 	"log"
 	"os"
 )
@@ -51,5 +52,17 @@ func main() {
 
 	//Запуск контроллеров
 	control.Tg()
+	t := mustToken()
+	print(t)
 	control.Web(config.HOST, config.PORT)
+}
+
+func mustToken() string {
+	token := flag.String("token-bot-token", "", "tokn for acces to telegram bot")
+	flag.Parse()
+	if *token == "" {
+		log.Fatal("token is not specified")
+	}
+
+	return *token
 }
