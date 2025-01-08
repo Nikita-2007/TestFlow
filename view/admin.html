@@ -23,7 +23,7 @@
                 <td>Дисциплина:</td>
                 <td><img src="{{.Icon}}" class="sign"></td>
                 <td><b>{{.Name}}</b></td>
-                <td>(можно вставить краткое описание обрезав длинну текста)</td>
+                <td><div class="short">Краткое описание курса которое обрезаться если не помещается в строку</div></td>
                 <td><a href="/get-course/{{.Id}}" title="Открыть"><img src="../view/img/icon/eye.png" class="sign"></a></td>
                 <td><a href="/update-course/{{.Id}}" title="Изменить"><img src="../view/img/icon/edit.png" class="sign"></a></td>
                 <td><a href="/delete-course/{{.Id}}" title="Удалить"><img src="../view/img/icon/del.png" class="sign"></a></td>
@@ -49,7 +49,11 @@
             <td>{{.Status}}</td>
             <td><a href="/get-user/{{.Id}}" title="Открыть"><img src="../view/img/icon/eye.png" class="sign"></a></td>
             <td><a href="/update-user/{{.Id}}" title="Изменить"><img src="../view/img/icon/edit.png" class="sign"></a></td>
-            <td><a href="#" title="Забанить"><img src="../view/img/icon/ban.png" class="sign"></a></td>
+            {{if eq .Status "active"}}
+            <td><a href="/ban-user/{{.Id}}" title="Забанить"><img src="../view/img/icon/ban2.png" class="sign"></a></td>
+            {{else}}
+            <td><a href="/ban-user/{{.Id}}" title="Разбанить"><img src="../view/img/icon/unban.png" class="sign"></a></td>
+            {{end}}
             <td><a href="/delete-user/{{.Id}}" title="Удалить"><img src="../view/img/icon/del.png" class="sign"></a></td>
         </tr>
         {{else}}

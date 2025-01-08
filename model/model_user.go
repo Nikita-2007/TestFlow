@@ -128,3 +128,45 @@ func LoginPass(login, pass string) int {
 	}
 	return 0
 }
+
+func UserBan(id int) {
+	db := connect()
+	query := `
+		SELECT Status
+		FROM User
+		WHERE Id = $1
+	;`
+	data := db.QueryRow(query, id)
+	user := struct {
+		Status string
+	}{}
+	data.Scan(
+		&user.Status,
+	)
+	if user.Status == "active" {
+		user.Status = "banned"
+	} else {
+		user.Status = "active"
+	}
+	query = `UPDATE User SET Status=? WHERE Id=?`
+	db.Exec(query, user.Status, id)
+	db.Close()
+}
+
+func GetCourseId(id int) int {
+	db := connect()
+	query := `
+		SELECT Course_id
+		FROM User
+		WHERE Id = $1
+	;`
+	data := db.QueryRow(query, id)
+	user := struct {
+		Course_id int
+	}{}
+	data.Scan(
+		&user.Course_id,
+	)
+	db.Close()
+	return user.Course_id
+}

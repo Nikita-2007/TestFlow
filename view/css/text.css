@@ -39,7 +39,7 @@ a {
 h1 {
     font-size: 3em;
     margin-left: 1.25em;
-    text-shadow: 0.05em 0.05em 0.05em rgba(255, 255, 255, 0.75);
+    text-shadow: 0.05em 0.05em 0.05em rgba(255, 255, 255, 0.25);
 }
 
 h2 {
@@ -110,4 +110,15 @@ ul li::before {
 
 .rating {
     color: #28a745;
+}
+
+.short {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.radio {
+    display:inline-flex ;
+    align-items: center;
 }

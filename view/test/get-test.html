@@ -12,18 +12,21 @@
         <h3>Всего вопросов: {{.Сount}}</h3>
         <form method="POST">
             <input type="text" name="count" value="{{.Сount}}" hidden>
-            {{range .Questions}}
+                {{range .Questions}}
+                    <br>
+                    <div><b>{{.NumberQuestion}}. {{.Question}}</b></div>
+                        <div class="radio">
+                        <input type="radio" name="{{.NumberQuestion}}" value="1">{{.Answer_1}}
+                        <input type="radio" name="{{.NumberQuestion}}" value="2">{{.Answer_2}}
+                        <input type="radio" name="{{.NumberQuestion}}" value="3">{{.Answer_3}}
+                        <input type="radio" name="{{.NumberQuestion}}" value="4">{{.Answer_4}}
+                        <input type="radio" name="{{.NumberQuestion}}" value="5">{{.Answer_5}}
+                        <input type="radio" name="{{.NumberQuestion}}" value="6">{{.Answer_6}}
+                    </div>
                 <br>
-                <div><b>{{.NumberQuestion}}. {{.Question}}</b></div>
-                <div><input type="radio" name="{{.NumberQuestion}}" value="1">{{.Answer_1}}</div>
-                <div><input type="radio" name="{{.NumberQuestion}}" value="2">{{.Answer_2}}</div>
-                <div><input type="radio" name="{{.NumberQuestion}}" value="3">{{.Answer_3}}</div>
-                <div><input type="radio" name="{{.NumberQuestion}}" value="4">{{.Answer_4}}</div>
-                <div><input type="radio" name="{{.NumberQuestion}}" value="5">{{.Answer_5}}</div>
-                <div><input type="radio" name="{{.NumberQuestion}}" value="6">{{.Answer_6}}</div>
-                <br>
-            {{end}}
+                {{end}}
             <br><br>
+            
             <button type="submit">Отправить</button>
         </form>
     </section>

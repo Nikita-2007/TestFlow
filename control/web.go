@@ -29,12 +29,14 @@ func Web(host, port string) {
 	http.HandleFunc("/get-user/{id}", getUser)
 	http.HandleFunc("/update-user/{id}", updateUser)
 	http.HandleFunc("/delete-user/{id}", deleteUser)
+	http.HandleFunc("/ban-user/{id}", banUser)
 
 	http.HandleFunc("/courses/", courses)
 	http.HandleFunc("/create-course/", createCourse)
 	http.HandleFunc("/get-course/{id}", getCourse)
 	http.HandleFunc("/update-course/{id}", updateCourse)
 	http.HandleFunc("/delete-course/{id}", deleteCourse)
+	http.HandleFunc("/course-testing/{id}", courseTesting)
 
 	http.HandleFunc("/testing/", testing)
 	http.HandleFunc("/create-test/", createTesting)
@@ -131,7 +133,6 @@ func admin(w http.ResponseWriter, r *http.Request) {
 	} else {
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 	}
-
 }
 
 func demo(w http.ResponseWriter, r *http.Request) {
@@ -150,4 +151,10 @@ func loginPass(w http.ResponseWriter, r *http.Request) {
 	pass := r.FormValue("pass")
 	User = model.LoginPass(login, pass)
 	http.Redirect(w, r, "/", http.StatusSeeOther)
+}
+
+func banUser(w http.ResponseWriter, r *http.Request) {
+	id := getId(r.RequestURI)
+	model.UserBan(id)
+	http.Redirect(w, r, "/admin", http.StatusSeeOther)
 }

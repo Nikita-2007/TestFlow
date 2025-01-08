@@ -73,3 +73,31 @@ func DeleteCourse(id int) {
 	db.Exec(query, id)
 	db.Close()
 }
+
+func CourseTesting(id int) *[]Testing {
+	db := connect()
+	query := `
+		SELECT t.Id, t.Name, c.Name, c.Icon, u.Name, t.Description
+		FROM Testing t
+		LEFT JOIN Course c ON t.Course_id = c.Id
+		LEFT JOIN User u ON t.User_id = u.Id
+		WHERE c.Id = ?
+	;`
+	data, _ := db.Query(query, id)
+	tests := []Testing{}
+	for data.Next() {
+		test := Testing{}
+		data.Scan(
+			&test.Id,
+			&test.Name,
+			&test.Course,
+			&test.CourseIcon,
+			&test.User,
+			&test.Description,
+		)
+		tests = append(tests, test)
+	}
+	db.Close()
+
+	return &tests
+}

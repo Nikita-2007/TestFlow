@@ -73,10 +73,10 @@ func getCourse(w http.ResponseWriter, r *http.Request) {
 	id := getId(r.RequestURI)
 	data := struct {
 		Title  string
-		Course model.Course
+		Course *model.Course
 	}{
 		Title:  "Дисциплина",
-		Course: *model.GetCourse(id),
+		Course: model.GetCourse(id),
 	}
 	tmpl := tmplFiles("view/course/get-course.html")
 	tmpl.ExecuteTemplate(w, "content", data)
@@ -87,4 +87,19 @@ func deleteCourse(w http.ResponseWriter, r *http.Request) {
 	id := getId(r.RequestURI)
 	model.DeleteCourse(id)
 	http.Redirect(w, r, "/admin", http.StatusSeeOther)
+}
+
+func courseTesting(w http.ResponseWriter, r *http.Request) {
+	id := getId(r.RequestURI)
+	data := struct {
+		Title  string
+		Course *model.Course
+		Tests  *[]model.Testing
+	}{
+		Title:  "Тестирования",
+		Course: model.GetCourse(id),
+		Tests:  model.CourseTesting(id),
+	}
+	tmpl := tmplFiles("view/course/course-testing.html")
+	tmpl.ExecuteTemplate(w, "content", data)
 }

@@ -121,7 +121,6 @@ td {
     word-wrap: break-word;
 }
 
-
 /*Тесты*/
 .test-card {
     display: grid;
@@ -141,17 +140,70 @@ td {
     margin-top: auto;
 }
 
-.courses {
-    display: flex;
+/*ДИСЦИПЛИНЫ*/
+.discipline-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(auto, 1fr);
+    grid-row-gap: 2em;
 }
 
-.avatar-courses {
-    width: 10%;
+.discipline-card {
+    width: 35em;
+    height: 10em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    position: relative;
+}
+
+.discipline-background-image-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.discipline-background-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.6;
+    filter: blur(3px);
+}
+
+.discipline-content {
+    text-align: center;
+    z-index: 1;
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 2em;
+    margin: 2em;
+    border-radius: 1em;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    width: 45%;
+    max-width: 50em;
+    backdrop-filter: blur(10px);
+}
+
+.discipline-icon {
+    width: 7em;
+    height: 7em;
+    margin-top: 1.5em;
+    margin-bottom: 2em;
+    display: block;
     margin-left: auto;
+    margin-right: auto;
 }
-.content-courses {
-    width: 89%;
+
+.discipline-title {
+    font-size: 2em;
+    margin: 0;
+    color: #333;
 }
+
 
 /*ПРОФИЛЬ ПОЛЬЗОАТЕЛЯ*/
 .user-profile {
@@ -243,7 +295,7 @@ td {
 }
 
 /*Дисциплина*/
-.discipline-card {
+.course-card {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -255,7 +307,7 @@ td {
     box-sizing: border-box;
 }
 
-.background-image-container {
+.course-background-image-container {
     position: absolute;
     top: 0;
     left: 0;
@@ -264,7 +316,7 @@ td {
     z-index: 0;
 }
 
-.background-image {
+.course-background-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -272,7 +324,7 @@ td {
     filter: blur(4px);
 }
 
-.content {
+.course-content {
     text-align: center;
     z-index: 1;
     background-color: rgba(255, 255, 255, 0.05);
@@ -285,24 +337,24 @@ td {
     transition: transform 0.3s ease-in-out;
 }
 
-.content:hover {
+.course-content:hover {
      transform: scale(1.02);
 }
 
-.icon-container {
+.course-icon-container {
     margin-bottom: 2em;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.icon-с {
+.course-icon {
      width: 7em;
      height: 7em;
      object-fit: contain; /* Сохраняет пропорции иконки */
 }
 
-.title-с {
+.course-title {
     font-size: 2.5em;
     margin-bottom: 15px;
     margin-left: auto;
@@ -310,7 +362,7 @@ td {
     color: #fff;
 }
 
-.description {
+.course-description {
     font-size: 1.2em;
     line-height: 1.6;
     text-shadow: 1px 1px 2px #000;
