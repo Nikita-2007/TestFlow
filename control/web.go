@@ -125,7 +125,7 @@ func admin(w http.ResponseWriter, r *http.Request) {
 		}{
 			Title:   "Админ-панель",
 			User:    model.AllUser(),
-			Course:  model.AllCourses(),
+			Course:  model.MiniCourses(),
 			Testing: model.AllTests(),
 		}
 		tmpl := tmplFiles("view/admin.html")

@@ -32,26 +32,37 @@ func createTesting(w http.ResponseWriter, r *http.Request) {
 		tmpl.ExecuteTemplate(w, "content", data)
 	} else if r.Method == "POST" {
 		name := r.FormValue("name")
-		course := r.FormValue("course")
-		user := User
 		description := r.FormValue("description")
-		id := model.CreateTest(user, name, course, description)
-		http.Redirect(w, r, "/get-test/"+strconv.Itoa(id), http.StatusSeeOther)
+		quest := r.FormValue("quest_new")
+		user := User
+		correct := r.FormValue("new")
+		answer_1 := r.FormValue("answer_1")
+		answer_2 := r.FormValue("answer_2")
+		answer_3 := r.FormValue("answer_3")
+		answer_4 := r.FormValue("answer_4")
+		answer_5 := r.FormValue("answer_5")
+		answer_6 := r.FormValue("answer_6")
+		course := r.FormValue("course")
+		id := model.CreateTest(name, description, quest, correct, answer_1, answer_2, answer_3, answer_4, answer_5, answer_6, course, user)
+		http.Redirect(w, r, "/update-test/"+strconv.Itoa(id), http.StatusSeeOther)
 	}
 }
 
 // Контролер запроса изменения теста
 func updateTesting(w http.ResponseWriter, r *http.Request) {
 	id := getId(r.RequestURI)
+	arr := model.GetQuestions(id)
 	if r.Method == "GET" {
 		data := struct {
-			Title   string
-			Testing *model.Testing
-			Course  *[]model.Course
+			Title     string
+			Testing   *model.Testing
+			Questions *[]model.Questions
+			Course    *[]model.Course
 		}{
-			Title:   "Редактирование теста",
-			Testing: model.GetTest(id),
-			Course:  model.AllCourses(),
+			Title:     "Редактирование теста",
+			Testing:   model.GetTest(id),
+			Questions: arr,
+			Course:    model.AllCourses(),
 		}
 		tmpl := tmplFiles("view/test/update-test.html")
 		tmpl.ExecuteTemplate(w, "content", data)
@@ -60,8 +71,16 @@ func updateTesting(w http.ResponseWriter, r *http.Request) {
 		course := r.FormValue("course")
 		user := User
 		description := r.FormValue("description")
-		model.UpdateTest(id, user, name, course, description)
-		http.Redirect(w, r, "/get-test/"+strconv.Itoa(id), http.StatusSeeOther)
+		quest := r.FormValue("quest_new")
+		correct := r.FormValue("new")
+		answer_1 := r.FormValue("answer_1")
+		answer_2 := r.FormValue("answer_2")
+		answer_3 := r.FormValue("answer_3")
+		answer_4 := r.FormValue("answer_4")
+		answer_5 := r.FormValue("answer_5")
+		answer_6 := r.FormValue("answer_6")
+		model.UpdateTest(id, user, name, course, description, quest, correct, answer_1, answer_2, answer_3, answer_4, answer_5, answer_6)
+		http.Redirect(w, r, "/update-test/"+strconv.Itoa(id), http.StatusSeeOther)
 	}
 }
 

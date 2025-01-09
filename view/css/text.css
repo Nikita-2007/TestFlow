@@ -119,6 +119,8 @@ ul li::before {
 }
 
 .radio {
-    display:inline-flex ;
+    display:grid;
+    width: 10em;
+    grid-template-columns: repeat(2, 5fr);
     align-items: center;
 }

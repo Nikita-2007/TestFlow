@@ -1,5 +1,7 @@
 package model
 
+import "strings"
+
 type Course struct {
 	Id          int
 	Name        string
@@ -23,6 +25,38 @@ func AllCourses() *[]Course {
 			&course.Background,
 			&course.Description,
 		)
+		courses = append(courses, course)
+	}
+	db.Close()
+
+	return &courses
+}
+
+func MiniCourses() *[]Course {
+	db := connect()
+	query := "SELECT * FROM Course"
+	data, _ := db.Query(query)
+	courses := []Course{}
+	for data.Next() {
+		course := Course{}
+		data.Scan(
+			&course.Id,
+			&course.Name,
+			&course.Icon,
+			&course.Background,
+			&course.Description,
+		)
+		arr := strings.Split(course.Description, " ")
+		s := ""
+		limit := 120
+		for _, i := range arr {
+			if limit <= 0 {
+				break
+			}
+			s += i + " "
+			limit -= len(i)
+		}
+		course.Description = s + " ..."
 		courses = append(courses, course)
 	}
 	db.Close()

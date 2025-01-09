@@ -18,5 +18,9 @@ func DataCourse() {
 		('Программирование', '../view/img/course/icon/programming.png', '../view/img/course/background/programming.jpg', 'Программирование – это мост между человеческим интеллектом и возможностями компьютера. Это процесс, в котором мы превращаем наши идеи и концепции в конкретные наборы инструкций, которые могут быть выполнены машиной. Оно требует логического мышления, умения решать проблемы и знания языков, понятных компьютеру, но результаты программирования влияют на все сферы нашей жизни.');
 	`
 	db.Exec(query)
+	query = `
+	INSERT INTO User(Avatar, Name, Password, Email, DataBirth, Course_id, DataReg, Status, Rate) VALUES
+		('../view/img/avatar.png', 'admin', 'admin', 'admin@admin.admin', '01-01-2001', 5, '01-01-2024', 'admin', 100);`
+	db.Exec(query)
 	db.Close()
 }

@@ -16,7 +16,7 @@ func Tg() {
 func MustToken() string {
 	token := flag.String("token-bot-token", "", "tokn for acces to telegram bot")
 	flag.Parse()
-	if *token == "" {
+	if *token == "a" { //"" {
 		log.Fatal("token is not specified")
 	}
 

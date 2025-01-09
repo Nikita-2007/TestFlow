@@ -100,7 +100,7 @@ func tableQuestion() {
 		NumberQuestion INTEGER,
 		Question TEXT NOT NULL,
 		Correct INTEGER NOT NULL,
-		Answer_1 TEXT,
+		Answer_1 TEXT ,
 		Answer_2 TEXT,
 		Answer_3 TEXT,
 		Answer_4 TEXT,
