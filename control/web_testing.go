@@ -117,7 +117,7 @@ func getTesting(w http.ResponseWriter, r *http.Request) {
 		}
 		model.SetResult(User, id, arr)
 		//Редирект на результат
-		http.Redirect(w, r, "/", http.StatusSeeOther)
+		http.Redirect(w, r, "/get-user/"+strconv.Itoa(User), http.StatusSeeOther)
 	}
 }
 
