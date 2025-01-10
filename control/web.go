@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-var User int = 1 //0 для выпуска. 1 для теста(админка)
+var User int = 0 //0 для выпуска. 1 для теста(админка)
 
 // Формируем список урлов страниц и функций их обработки
 func Web(host, port string) {
@@ -26,6 +26,7 @@ func Web(host, port string) {
 
 	http.HandleFunc("/users/", allUser)
 	http.HandleFunc("/create-user/", createUser)
+	http.HandleFunc("/get-user/", profile)
 	http.HandleFunc("/get-user/{id}", getUser)
 	http.HandleFunc("/update-user/{id}", updateUser)
 	http.HandleFunc("/delete-user/{id}", deleteUser)

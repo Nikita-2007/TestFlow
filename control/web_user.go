@@ -102,3 +102,7 @@ func allUser(w http.ResponseWriter, r *http.Request) {
 	tmpl := tmplFiles("view/user/users.html")
 	tmpl.ExecuteTemplate(w, "content", data)
 }
+
+func profile(w http.ResponseWriter, r *http.Request) {
+	http.Redirect(w, r, "/get-user/"+strconv.Itoa(User), http.StatusSeeOther)
+}
